@@ -22,22 +22,22 @@ public class Main {
 
         do {
             printGrid(grid);
-            System.out.println("Enter a position as \"rowcolumn\" or enter \'q\' to quit");
+            System.out.println("Enter a column / row [a-j][0-9] or \'q\' to quit");
             input = scanner.nextLine();
 
             if (input.length() != 2 && !input.equals("q"))
             {
-                System.out.println("Please enter a row immediately followed by a column");
+                System.out.println("Please enter a valid column / row [a-j][0-9]");
             }
             else if (!input.equals("q"))
             {
                 if (!(new String(rows).contains(String.valueOf(input.charAt(0)))))
                 {
-                    System.out.println("Please enter a valid row");
+                    System.out.println("Please enter a valid column / row [a-j][0-9]");
                 }
-                else if (Character.getNumericValue(input.charAt(1)) > 9 || Character.getNumericValue(input.charAt(1)) < 0)
+                else if (Character.getNumericValue(input.charAt(1)) < 0)
                 {
-                    System.out.println("Please enter a valid column");
+                    System.out.println("Please enter a valid column / row [a-j][0-9]");
                 }
                 else if (grid[new String(rows).indexOf((input.charAt(0)))][Character.getNumericValue(input.charAt(1))].marked)
                 {
