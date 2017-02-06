@@ -4,25 +4,26 @@ package edu.weberstate.cs3230;
  * Created by parker on 2/6/17.
  */
 public class Cell {
-    private boolean isMarked;
+    private boolean hasShip;
     private boolean isHit;
     private Ship ship;
 
     public Cell()
     {
-        this.isMarked = false;
+        this.hasShip = false;
         this.isHit = false;
         this.ship = null;
     }
 
     public boolean hasShip()
     {
-        return !(this.ship == null);
+        return this.hasShip;
     }
 
     public void setShip(Ship ship)
     {
         this.ship = ship;
+        this.hasShip = true;
     }
 
     public Ship getShip()
