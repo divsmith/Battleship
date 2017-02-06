@@ -5,21 +5,28 @@ package edu.weberstate.cs3230;
  */
 abstract public class Ship {
     private String name;
+    private int hitCount;
+    private int hits;
 
-    public enum Hitstate
-    {
-        Hit,
-        Sunk,
-        Invalid
-    }
-
-    protected Ship(String name)
+    protected Ship(String name, int hitCount)
     {
         this.name = name;
+        this.hitCount = hitCount;
+        this.hits = 0;
     }
 
     public String getName()
     {
         return this.name;
+    }
+
+    public int getHitCount()
+    {
+        return this.hitCount;
+    }
+
+    public int getHits()
+    {
+        return this.hits;
     }
 }
