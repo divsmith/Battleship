@@ -15,11 +15,6 @@ public class Cell {
         this.ship = null;
     }
 
-    public boolean isMarked()
-    {
-        return this.isMarked;
-    }
-
     public boolean hasShip()
     {
         return this.hasShip;
@@ -39,6 +34,11 @@ public class Cell {
     public HitState hit()
     {
         // Check if cell is already marked
+        if (this.isMarked)
+        {
+            return HitState.AlreadyMarked;
+        }
+
 
             // set isMarked to true
 
