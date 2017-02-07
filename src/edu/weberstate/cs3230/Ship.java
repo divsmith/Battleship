@@ -5,13 +5,13 @@ package edu.weberstate.cs3230;
  */
 abstract public class Ship {
     private String name;
-    private int hitCount;
+    private int maxHits;
     private int hits;
 
-    protected Ship(String name, int hitCount)
+    protected Ship(String name, int maxHits)
     {
         this.name = name;
-        this.hitCount = hitCount;
+        this.maxHits = maxHits;
         this.hits = 0;
     }
 
@@ -20,9 +20,9 @@ abstract public class Ship {
         return this.name;
     }
 
-    public int getHitCount()
+    public int getMaxHits()
     {
-        return this.hitCount;
+        return this.maxHits;
     }
 
     public int getHits()
