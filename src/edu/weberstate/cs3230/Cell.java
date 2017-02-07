@@ -11,7 +11,7 @@ public class Cell {
     public Cell()
     {
         this.hasShip = false;
-        this.isHit = false;
+        this.isMarked = false;
         this.ship = null;
     }
 
