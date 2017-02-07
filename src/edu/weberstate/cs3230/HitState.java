@@ -6,5 +6,7 @@ package edu.weberstate.cs3230;
 public enum HitState {
     Hit,
     Sunk,
-    Miss
+    Miss,
+    Invalid,
+    AlreadyMarked
 }
