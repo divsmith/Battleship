@@ -30,4 +30,15 @@ public class Cell {
     {
         return this.ship;
     }
+
+    public void hit()
+    {
+        // Check if cell is already marked
+
+            // set isMarked to true
+
+            // if there is a ship, hit it
+
+        // Return status
+    }
 }
