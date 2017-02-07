@@ -43,6 +43,10 @@ public class Cell {
             {
                 hitstate = this.ship.hit();
             }
+            else
+            {
+                hitstate = HitState.Miss;
+            }
         }
 
         return hitstate;
