@@ -15,6 +15,11 @@ public class Cell {
         this.ship = null;
     }
 
+    public boolean isMarked()
+    {
+        return this.isMarked;
+    }
+
     public boolean hasShip()
     {
         return this.hasShip;
@@ -31,7 +36,7 @@ public class Cell {
         return this.ship;
     }
 
-    public void hit()
+    public HitState hit()
     {
         // Check if cell is already marked
 
