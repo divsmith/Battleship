@@ -29,4 +29,16 @@ abstract public class Ship {
     {
         return this.hits;
     }
+
+    public HitState hit()
+    {
+        hits++;
+
+        if (hits == maxHits)
+        {
+            return HitState.Sunk;
+        }
+
+        return HitState.Hit;
+    }
 }
