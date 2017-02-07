@@ -5,7 +5,7 @@ package edu.weberstate.cs3230;
  */
 public class Cell {
     private boolean hasShip;
-    private boolean isHit;
+    private boolean isMarked;
     private Ship ship;
 
     public Cell()
