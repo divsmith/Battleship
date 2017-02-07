@@ -33,17 +33,18 @@ public class Cell {
 
     public HitState hit()
     {
-        // Check if cell is already marked
-        if (this.isMarked)
+        HitState hitstate = HitState.AlreadyMarked;
+
+        if (!this.isMarked)
         {
-            return HitState.AlreadyMarked;
+            this.isMarked = true;
+
+            if (this.hasShip())
+            {
+                hitstate = this.ship.hit();
+            }
         }
 
-
-            // set isMarked to true
-
-            // if there is a ship, hit it
-
-        // Return status
+        return hitstate;
     }
 }
