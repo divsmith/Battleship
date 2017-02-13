@@ -49,11 +49,11 @@ public class Grid {
     {
         int row = coord.getRow();
         int col = coord.getCol();
-        int length = ship.getMaxHits();
+        int length = ship.getLength();
 
         if (shipCanFit(row, col, length, orientation))
         {
-            for (int i = 0; i < ship.getMaxHits(); i++)
+            for (int i = 0; i < ship.getLength(); i++)
             {
                 grid[row][col].setShip(ship);
 

@@ -5,7 +5,7 @@ package edu.weberstate.cs3230;
  */
 abstract public class Ship {
     private String name;
-    private int maxHits;
+    private int length;
     private int hits;
     private ShipState shipState;
 
@@ -14,10 +14,10 @@ abstract public class Ship {
         sunk
     }
 
-    protected Ship(String name, int maxHits)
+    protected Ship(String name, int length)
     {
         this.name = name;
-        this.maxHits = maxHits;
+        this.length = length;
         this.hits = 0;
         this.shipState = ShipState.floating;
     }
@@ -27,9 +27,9 @@ abstract public class Ship {
         return this.name;
     }
 
-    public int getMaxHits()
+    public int getLength()
     {
-        return this.maxHits;
+        return this.length;
     }
 
     public int getHits()
@@ -41,7 +41,7 @@ abstract public class Ship {
     {
         hits++;
 
-        if (hits == maxHits)
+        if (hits == length)
         {
             this.shipState = ShipState.sunk;
         }

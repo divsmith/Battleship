@@ -26,7 +26,7 @@ class PatrolTest {
     @Test
     void ship_has_correct_max_hits()
     {
-        Assertions.assertEquals(ship.getMaxHits(), MAXHITS);
+        Assertions.assertEquals(ship.getLength(), MAXHITS);
     }
 
     @Test

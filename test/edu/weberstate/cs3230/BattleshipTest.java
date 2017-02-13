@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Created by parker on 2/12/17.
  */
@@ -28,7 +26,7 @@ class BattleshipTest {
     @Test
     void ship_has_correct_max_hits()
     {
-        Assertions.assertEquals(ship.getMaxHits(), MAXHITS);
+        Assertions.assertEquals(ship.getLength(), MAXHITS);
     }
 
     @Test
