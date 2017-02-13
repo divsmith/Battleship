@@ -43,7 +43,7 @@ public class Cell {
 
     public HitResult hit()
     {
-        HitResult result = HitResult.alreadyMarked
+        HitResult result = HitResult.alreadyMarked;
 
         if (!this.isMarked)
         {
