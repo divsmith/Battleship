@@ -38,6 +38,11 @@ public class Grid {
         int col = coord.getCol();
         int length = ship.getMaxHits();
 
+        if (row < 0 || row > size || col < 0 || col > size)
+        {
+            return false;
+        }
+
 
         if (shipCanFit(row, col, length, orientation))
         {

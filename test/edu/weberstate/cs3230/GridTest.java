@@ -126,4 +126,15 @@ class GridTest {
         Assertions.assertNull(grid.getShip(new Coordinate('b', 0)));
     }
 
+    @Test
+    void ship_cannot_be_placed_off_grid()
+    {
+        Ship carrier = new Carrier();
+
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('@', 0), 'h'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('L', 0), 'h'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', -1), 'v'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 11), 'v'));
+    }
+
 }
