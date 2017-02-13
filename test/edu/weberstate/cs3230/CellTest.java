@@ -73,4 +73,34 @@ class CellTest {
         Assertions.assertEquals(CellResult.sunk, cell.hit());
     }
 
+    @Test
+    void cell_has_correct_status_when_new()
+    {
+        Assertions.assertEquals(CellStatus.unmarked, cell.getStatus());
+    }
+
+    @Test
+    void cell_has_correct_status_after_miss()
+    {
+        cell.hit();
+        Assertions.assertEquals(CellStatus.miss, cell.getStatus());
+    }
+
+    @Test
+    void cell_has_correct_status_after_hit()
+    {
+        cell.setShip(ship);
+        cell.hit();
+        Assertions.assertEquals(CellStatus.hit, cell.getStatus());
+    }
+
+    @Test
+    void cell_has_correct_status_after_sunk()
+    {
+        ship.hit();
+        cell.setShip(ship);
+        cell.hit();
+        Assertions.assertEquals(CellStatus.hit, cell.getStatus());
+    }
+
 }

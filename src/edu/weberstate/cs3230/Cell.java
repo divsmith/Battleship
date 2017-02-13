@@ -7,8 +7,15 @@ import edu.weberstate.cs3230.Ship.ShipState;
  */
 public class Cell {
     private boolean hasShip;
-    private boolean isMarked;
     private Ship ship;
+    private CellStatus status;
+
+    public enum CellStatus
+    {
+        hit,
+        miss,
+        unmarked
+    }
 
     public enum CellResult
     {
@@ -21,8 +28,8 @@ public class Cell {
     public Cell()
     {
         this.hasShip = false;
-        this.isMarked = false;
         this.ship = null;
+        this.status = CellStatus.unmarked;
     }
 
     public boolean hasShip()
@@ -45,12 +52,12 @@ public class Cell {
     {
         CellResult result = CellResult.alreadyMarked;
 
-        if (!this.isMarked)
+        if (status == CellStatus.unmarked)
         {
-            this.isMarked = true;
-
             if (this.hasShip())
             {
+                status = CellStatus.hit;
+
                 ShipState state = this.ship.hit();
 
                 switch(state)
@@ -65,10 +72,17 @@ public class Cell {
             }
             else
             {
+                status = CellStatus.miss;
+
                 result = CellResult.miss;
             }
         }
 
         return result;
+    }
+
+    public CellStatus getStatus()
+    {
+        return status;
     }
 }
