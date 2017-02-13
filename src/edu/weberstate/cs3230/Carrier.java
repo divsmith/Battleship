@@ -5,9 +5,9 @@ package edu.weberstate.cs3230;
  */
 public class Carrier extends Ship {
     private static String NAME = "Carrier";
-    private static int MAXHITS = 5;
+    private static int LENGTH = 5;
 
     protected Carrier() {
-        super(NAME, MAXHITS);
+        super(NAME, LENGTH);
     }
 }

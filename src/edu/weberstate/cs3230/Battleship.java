@@ -5,9 +5,9 @@ package edu.weberstate.cs3230;
  */
 public class Battleship extends Ship {
     private static String NAME = "Battleship";
-    private static int MAXHITS = 4;
+    private static int LENGTH = 4;
 
     protected Battleship() {
-        super(NAME, MAXHITS);
+        super(NAME, LENGTH);
     }
 }

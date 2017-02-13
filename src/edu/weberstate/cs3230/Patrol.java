@@ -5,9 +5,9 @@ package edu.weberstate.cs3230;
  */
 public class Patrol extends Ship {
     private static String NAME = "Patrol";
-    private static int MAXHITS = 2;
+    private static int LENGTH = 2;
 
     public Patrol() {
-        super(NAME, MAXHITS);
+        super(NAME, LENGTH);
     }
 }

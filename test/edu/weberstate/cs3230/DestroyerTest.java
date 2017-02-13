@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class DestroyerTest {
     private Ship ship;
     private static String NAME = "Destroyer";
-    private static int MAXHITS = 3;
+    private static int LENGTH = 3;
 
     @BeforeEach
     void setUp() {
@@ -24,9 +24,9 @@ class DestroyerTest {
     }
 
     @Test
-    void ship_has_correct_max_hits()
+    void ship_has_correct_length()
     {
-        Assertions.assertEquals(ship.getLength(), MAXHITS);
+        Assertions.assertEquals(ship.getLength(), LENGTH);
     }
 
     @Test
