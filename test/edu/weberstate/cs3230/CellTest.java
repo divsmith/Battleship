@@ -35,4 +35,10 @@ class CellTest {
         Assertions.assertEquals(result, CellResult.alreadyMarked);
     }
 
+    @Test
+    void empty_cell_does_not_have_ship()
+    {
+        Assertions.assertFalse(cell.hasShip());
+    }
+
 }
