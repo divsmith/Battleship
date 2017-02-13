@@ -32,6 +32,44 @@ class GridTest {
     }
 
     @Test
+    void grid_returns_miss_when_missed()
+    {
+        Cell.CellResult result = grid.hit(new Coordinate('a', 0));
+
+        Assertions.assertEquals(Cell.CellResult.miss, result);
+    }
+
+    @Test
+    void grid_returns_hit_when_hit()
+    {
+        Ship ship = new Patrol();
+        Coordinate coord = new Coordinate('a', 0);
+        grid.placeShip(ship, coord, 'h');
+
+        Assertions.assertEquals(Cell.CellResult.hit, grid.hit(coord));
+    }
+
+    @Test
+    void grid_returns_sunk_when_sunk()
+    {
+        Ship ship = new Patrol();
+        Coordinate coord = new Coordinate('a', 0);
+        grid.placeShip(ship, coord, 'h');
+        grid.hit(coord);
+
+        Assertions.assertEquals(Cell.CellResult.sunk, grid.hit(new Coordinate('a', 1)));
+    }
+
+    @Test
+    void grid_cannot_be_hit_off_the_grid()
+    {
+        Assertions.assertNull(grid.getShip(new Coordinate('@', 0)));
+        Assertions.assertNull(grid.getShip(new Coordinate('L', 0)));
+        Assertions.assertNull(grid.getShip(new Coordinate('a', -1)));
+        Assertions.assertNull(grid.getShip(new Coordinate('a', 11)));
+    }
+
+    @Test
     void ship_can_be_placed_on_grid_horizontally()
     {
         Coordinate coord = new Coordinate('a', 0);

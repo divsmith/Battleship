@@ -27,6 +27,19 @@ public class Grid {
         }
     }
 
+    public Cell.CellResult hit(Coordinate coord)
+    {
+        int row = coord.getRow();
+        int col = coord.getCol();
+
+        if (row < 0 || row > size || col < 0 || col > size)
+        {
+            return null;
+        }
+
+        return grid[row][col].hit();
+    }
+
     public int getSize()
     {
         return size;
