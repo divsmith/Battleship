@@ -20,6 +20,12 @@ class CellTest {
     }
 
     @Test
+    void cell_without_ship_returns_null()
+    {
+        Assertions.assertNull(cell.getShip());
+    }
+
+    @Test
     void empty_cell_hit_returns_miss()
     {
         CellResult result = cell.hit();
