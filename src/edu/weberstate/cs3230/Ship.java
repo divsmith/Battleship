@@ -7,12 +7,19 @@ abstract public class Ship {
     private String name;
     private int maxHits;
     private int hits;
+    private ShipState shipState;
+
+    public enum ShipState {
+        floating,
+        sunk
+    }
 
     protected Ship(String name, int maxHits)
     {
         this.name = name;
         this.maxHits = maxHits;
         this.hits = 0;
+        this.shipState = ShipState.floating;
     }
 
     public String getName()
@@ -30,15 +37,15 @@ abstract public class Ship {
         return this.hits;
     }
 
-    public HitState hit()
+    public ShipState hit()
     {
         hits++;
 
         if (hits == maxHits)
         {
-            return HitState.Sunk;
+            this.shipState = ShipState.sunk;
         }
 
-        return HitState.Hit;
+        return this.shipState;
     }
 }
