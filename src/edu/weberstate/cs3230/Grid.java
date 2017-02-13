@@ -27,7 +27,7 @@ public class Grid {
         }
     }
 
-    public Cell.CellResult hit(Coordinate coord)
+    public Cell.HitResult hit(Coordinate coord)
     {
         int row = coord.getRow();
         int col = coord.getCol();

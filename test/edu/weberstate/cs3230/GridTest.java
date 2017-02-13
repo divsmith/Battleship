@@ -4,8 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Created by parker on 2/13/17.
  */
@@ -34,9 +32,9 @@ class GridTest {
     @Test
     void grid_returns_miss_when_missed()
     {
-        Cell.CellResult result = grid.hit(new Coordinate('a', 0));
+        Cell.HitResult result = grid.hit(new Coordinate('a', 0));
 
-        Assertions.assertEquals(Cell.CellResult.miss, result);
+        Assertions.assertEquals(Cell.HitResult.miss, result);
     }
 
     @Test
@@ -46,7 +44,7 @@ class GridTest {
         Coordinate coord = new Coordinate('a', 0);
         grid.placeShip(ship, coord, 'h');
 
-        Assertions.assertEquals(Cell.CellResult.hit, grid.hit(coord));
+        Assertions.assertEquals(Cell.HitResult.hit, grid.hit(coord));
     }
 
     @Test
@@ -57,7 +55,7 @@ class GridTest {
         grid.placeShip(ship, coord, 'h');
         grid.hit(coord);
 
-        Assertions.assertEquals(Cell.CellResult.alreadyMarked, grid.hit(coord));
+        Assertions.assertEquals(Cell.HitResult.alreadyMarked, grid.hit(coord));
     }
 
     @Test
@@ -68,7 +66,7 @@ class GridTest {
         grid.placeShip(ship, coord, 'h');
         grid.hit(coord);
 
-        Assertions.assertEquals(Cell.CellResult.sunk, grid.hit(new Coordinate('a', 1)));
+        Assertions.assertEquals(Cell.HitResult.sunk, grid.hit(new Coordinate('a', 1)));
     }
 
     @Test

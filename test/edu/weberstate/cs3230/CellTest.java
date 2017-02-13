@@ -28,9 +28,9 @@ class CellTest {
     @Test
     void empty_cell_hit_returns_miss()
     {
-        CellResult result = cell.hit();
+        HitResult result = cell.hit();
 
-        Assertions.assertEquals(result, CellResult.miss);
+        Assertions.assertEquals(result, HitResult.miss);
     }
 
     @Test
@@ -38,9 +38,9 @@ class CellTest {
     {
         cell.hit();
 
-        CellResult result = cell.hit();
+        HitResult result = cell.hit();
 
-        Assertions.assertEquals(result, CellResult.alreadyMarked);
+        Assertions.assertEquals(result, HitResult.alreadyMarked);
     }
 
     @Test
@@ -62,7 +62,7 @@ class CellTest {
     void cell_returns_hit_when_ship_is_hit()
     {
         cell.setShip(ship);
-        Assertions.assertEquals(CellResult.hit, cell.hit());
+        Assertions.assertEquals(HitResult.hit, cell.hit());
     }
 
     @Test
@@ -70,7 +70,7 @@ class CellTest {
     {
         ship.hit();
         cell.setShip(ship);
-        Assertions.assertEquals(CellResult.sunk, cell.hit());
+        Assertions.assertEquals(HitResult.sunk, cell.hit());
     }
 
     @Test
