@@ -4,8 +4,8 @@ package edu.weberstate.cs3230;
  * Created by parker on 2/13/17.
  */
 public class Coordinate {
-    int row;
-    int col;
+    private int row;
+    private int col;
 
     public Coordinate(char row, int col)
     {
