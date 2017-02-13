@@ -29,7 +29,11 @@ class CellTest {
     @Test
     void already_hit_cell_returns_already_hit()
     {
+        cell.hit();
 
+        HitResult result = cell.hit();
+
+        Assertions.assertEquals(result, HitResult.alreadyMarked);
     }
 
 }
