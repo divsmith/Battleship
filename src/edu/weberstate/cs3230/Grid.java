@@ -87,7 +87,7 @@ public class Grid {
                 return false;
             }
 
-            if (grid[row][col].getShip() != null)
+            if (grid[row][col].hasShip())
             {
                 return false;
             }
