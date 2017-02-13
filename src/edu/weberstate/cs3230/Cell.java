@@ -68,6 +68,7 @@ public class Cell {
 
                     case sunk:
                         result = HitResult.sunk;
+                        break;
                 }
             }
             else
