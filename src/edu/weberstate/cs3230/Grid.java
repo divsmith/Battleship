@@ -32,7 +32,7 @@ public class Grid {
         int row = coord.getRow();
         int col = coord.getCol();
 
-        if (row < 0 || row > size || col < 0 || col > size)
+        if (!coordinatesAreValid(row, col))
         {
             return null;
         }
@@ -50,12 +50,6 @@ public class Grid {
         int row = coord.getRow();
         int col = coord.getCol();
         int length = ship.getMaxHits();
-
-        if (row < 0 || row > size || col < 0 || col > size)
-        {
-            return false;
-        }
-
 
         if (shipCanFit(row, col, length, orientation))
         {
@@ -88,6 +82,11 @@ public class Grid {
     {
         for (int i = 0; i < length; i++)
         {
+            if (!coordinatesAreValid(row, col))
+            {
+                return false;
+            }
+
             if (grid[row][col].getShip() != null)
             {
                 return false;
@@ -111,12 +110,22 @@ public class Grid {
         return true;
     }
 
+    private boolean coordinatesAreValid(int row, int col)
+    {
+        if (row < 0 || row > size - 1 || col < 0 || col > size - 1)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public Ship getShip(Coordinate coord)
     {
         int row = coord.getRow();
         int col = coord.getCol();
 
-        if (row < 0 || row > size || col < 0 || col > size)
+        if (!coordinatesAreValid(row, col))
         {
             return null;
         }

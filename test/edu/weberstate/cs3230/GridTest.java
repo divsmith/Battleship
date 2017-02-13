@@ -72,10 +72,17 @@ class GridTest {
     @Test
     void grid_cannot_be_hit_off_the_grid()
     {
-        Assertions.assertNull(grid.getShip(new Coordinate('@', 0)));
-        Assertions.assertNull(grid.getShip(new Coordinate('L', 0)));
-        Assertions.assertNull(grid.getShip(new Coordinate('a', -1)));
-        Assertions.assertNull(grid.getShip(new Coordinate('a', 11)));
+        Assertions.assertNull(grid.hit(new Coordinate('@', 0)));
+        Assertions.assertNull(grid.hit(new Coordinate('L', 0)));
+        Assertions.assertNull(grid.hit(new Coordinate('a', -1)));
+        Assertions.assertNull(grid.hit(new Coordinate('a', 11)));
+    }
+
+    @Test
+    void grid_cannot_be_hit_one_off_the_grid()
+    {
+        Assertions.assertNull(grid.hit(new Coordinate('a', 10)));
+        Assertions.assertNull(grid.hit(new Coordinate('k', 0)));
     }
 
     @Test
@@ -174,7 +181,7 @@ class GridTest {
     }
 
     @Test
-    void ship_cannot_be_placed_off_grid()
+    void ship_starting_point_cannot_be_placed_off_grid()
     {
         Ship carrier = new Carrier();
 
@@ -185,12 +192,37 @@ class GridTest {
     }
 
     @Test
+    void ship_cannot_be_placed_one_over_end_of_grid()
+    {
+        Ship carrier = new Carrier();
+
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 10), 'h'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('k', 0), 'v'));
+    }
+
+    @Test
+    void ship_end_cannot_extend_past_grid()
+    {
+        Ship carrier = new Carrier();
+
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 7), 'h'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('h', 0), 'v'));
+    }
+
+    @Test
     void ship_cannot_be_retrieved_from_off_grid()
     {
         Assertions.assertNull(grid.getShip(new Coordinate('@', 0)));
         Assertions.assertNull(grid.getShip(new Coordinate('L', 0)));
         Assertions.assertNull(grid.getShip(new Coordinate('a', -1)));
         Assertions.assertNull(grid.getShip(new Coordinate('a', 11)));
+    }
+
+    @Test
+    void ship_cannot_be_retrieved_from_one_off_grid()
+    {
+        Assertions.assertNull(grid.getShip(new Coordinate('a', 10)));
+        Assertions.assertNull(grid.getShip(new Coordinate('k', 0)));
     }
 
 }
