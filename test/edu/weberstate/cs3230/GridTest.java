@@ -50,6 +50,17 @@ class GridTest {
     }
 
     @Test
+    void grid_returns_alreadymarked_when_alreadyhit()
+    {
+        Ship ship = new Patrol();
+        Coordinate coord = new Coordinate('a', 0);
+        grid.placeShip(ship, coord, 'h');
+        grid.hit(coord);
+
+        Assertions.assertEquals(Cell.CellResult.alreadyMarked, grid.hit(coord));
+    }
+
+    @Test
     void grid_returns_sunk_when_sunk()
     {
         Ship ship = new Patrol();
