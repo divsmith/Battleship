@@ -11,10 +11,12 @@ import static edu.weberstate.cs3230.Cell.*;
  */
 class CellTest {
     private Cell cell;
+    private Ship ship;
 
     @BeforeEach
     void setUp() {
         cell = new Cell();
+        ship = new Patrol();
     }
 
     @Test
@@ -39,6 +41,30 @@ class CellTest {
     void empty_cell_does_not_have_ship()
     {
         Assertions.assertFalse(cell.hasShip());
+    }
+
+    @Test
+    void cell_returns_correct_ship()
+    {
+        Assertions.assertNull(cell.getShip());
+        cell.setShip(ship);
+
+        Assertions.assertSame(ship, cell.getShip());
+    }
+
+    @Test
+    void cell_returns_hit_when_ship_is_hit()
+    {
+        cell.setShip(ship);
+        Assertions.assertEquals(CellResult.hit, cell.hit());
+    }
+
+    @Test
+    void cell_returns_sunk_when_ship_is_sunk()
+    {
+        ship.hit();
+        cell.setShip(ship);
+        Assertions.assertEquals(CellResult.sunk, cell.hit());
     }
 
 }
