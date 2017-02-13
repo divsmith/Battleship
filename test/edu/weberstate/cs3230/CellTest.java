@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static edu.weberstate.cs3230.Cell.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created by parker on 2/12/17.
@@ -21,9 +20,9 @@ class CellTest {
     @Test
     void empty_cell_hit_returns_miss()
     {
-        HitResult result = cell.hit();
+        CellResult result = cell.hit();
 
-        Assertions.assertEquals(result, HitResult.miss);
+        Assertions.assertEquals(result, CellResult.miss);
     }
 
     @Test
@@ -31,9 +30,9 @@ class CellTest {
     {
         cell.hit();
 
-        HitResult result = cell.hit();
+        CellResult result = cell.hit();
 
-        Assertions.assertEquals(result, HitResult.alreadyMarked);
+        Assertions.assertEquals(result, CellResult.alreadyMarked);
     }
 
 }

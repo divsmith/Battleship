@@ -10,7 +10,7 @@ public class Cell {
     private boolean isMarked;
     private Ship ship;
 
-    public enum HitResult
+    public enum CellResult
     {
         hit,
         sunk,
@@ -41,9 +41,9 @@ public class Cell {
         return this.ship;
     }
 
-    public HitResult hit()
+    public CellResult hit()
     {
-        HitResult result = HitResult.alreadyMarked;
+        CellResult result = CellResult.alreadyMarked;
 
         if (!this.isMarked)
         {
@@ -56,16 +56,16 @@ public class Cell {
                 switch(state)
                 {
                     case floating:
-                        result = HitResult.hit;
+                        result = CellResult.hit;
                         break;
 
                     case sunk:
-                        result = HitResult.sunk;
+                        result = CellResult.sunk;
                 }
             }
             else
             {
-                result = HitResult.miss;
+                result = CellResult.miss;
             }
         }
 
