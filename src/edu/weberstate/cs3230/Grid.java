@@ -100,6 +100,14 @@ public class Grid {
 
     public Ship getShip(Coordinate coord)
     {
-        return grid[coord.getRow()][coord.getCol()].getShip();
+        int row = coord.getRow();
+        int col = coord.getCol();
+
+        if (row < 0 || row > size || col < 0 || col > size)
+        {
+            return null;
+        }
+
+        return grid[row][col].getShip();
     }
 }

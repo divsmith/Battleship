@@ -137,4 +137,13 @@ class GridTest {
         Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 11), 'v'));
     }
 
+    @Test
+    void ship_cannot_be_retrieved_from_off_grid()
+    {
+        Assertions.assertNull(grid.getShip(new Coordinate('@', 0)));
+        Assertions.assertNull(grid.getShip(new Coordinate('L', 0)));
+        Assertions.assertNull(grid.getShip(new Coordinate('a', -1)));
+        Assertions.assertNull(grid.getShip(new Coordinate('a', 11)));
+    }
+
 }
