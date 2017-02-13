@@ -18,6 +18,13 @@ class CoordinateTest {
     }
 
     @Test
+    void higher_character_numbers_are_converted_correctly()
+    {
+        Coordinate coord = new Coordinate('R', 10);
+        Assertions.assertEquals(17, coord.getRow());
+    }
+
+    @Test
     void capital_row_is_lowercased_and_converted_to_int()
     {
         Coordinate coord = new Coordinate('A', 10);
