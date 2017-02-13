@@ -15,7 +15,7 @@ public class Cell {
         hit,
         sunk,
         miss,
-        alreadymarked
+        alreadyMarked
     }
 
     public Cell()
@@ -43,7 +43,7 @@ public class Cell {
 
     public HitResult hit()
     {
-        HitResult result = HitResult.alreadymarked
+        HitResult result = HitResult.alreadyMarked
 
         if (!this.isMarked)
         {
