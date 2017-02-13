@@ -1,5 +1,7 @@
 package edu.weberstate.cs3230;
 
+import edu.weberstate.cs3230.Ship.ShipState;
+
 /**
  * Created by parker on 2/6/17.
  */
@@ -7,6 +9,14 @@ public class Cell {
     private boolean hasShip;
     private boolean isMarked;
     private Ship ship;
+
+    public enum HitResult
+    {
+        hit,
+        sunk,
+        miss,
+        alreadymarked
+    }
 
     public Cell()
     {
@@ -31,9 +41,9 @@ public class Cell {
         return this.ship;
     }
 
-    public HitState hit()
+    public HitResult hit()
     {
-        HitState hitstate = HitState.AlreadyMarked;
+        HitResult result = HitResult.alreadymarked
 
         if (!this.isMarked)
         {
@@ -41,14 +51,24 @@ public class Cell {
 
             if (this.hasShip())
             {
-                hitstate = this.ship.hit();
+                ShipState state = this.ship.hit();
+
+                switch(state)
+                {
+                    case floating:
+                        result = HitResult.hit;
+                        break;
+
+                    case sunk:
+                        result = HitResult.sunk;
+                }
             }
             else
             {
-                hitstate = HitState.Miss;
+                result = HitResult.miss;
             }
         }
 
-        return hitstate;
+        return result;
     }
 }
