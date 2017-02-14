@@ -5,10 +5,5 @@ package edu.weberstate.cs3230;
  */
 public class ConsoleGame {
 
-    private Cell[][] grid;
 
-    public ConsoleGame(int size)
-    {
-        grid = new Cell[size][size];
-    }
 }
