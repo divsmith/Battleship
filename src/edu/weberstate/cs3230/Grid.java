@@ -27,6 +27,11 @@ public class Grid {
         }
     }
 
+    public Cell[][] getGrid()
+    {
+        return this.grid;
+    }
+
     public Cell.HitResult hit(Coordinate coord)
     {
         int row = coord.getRow();

@@ -221,4 +221,42 @@ class GridTest {
         Assertions.assertNull(grid.getShip(new Coordinate('k', 0)));
     }
 
+    @Test
+    void copy_of_internal_grid_can_be_retrieved()
+    {
+        Ship patrol = new Patrol();
+        grid.placeShip(patrol, a0, 'h');
+
+        Assertions.assertTrue(grid.getGrid() instanceof Cell[][]);
+    }
+
+    @Test
+    void copy_of_internal_grid_is_correct()
+    {
+        Ship patrol = new Patrol();
+        Ship carrier = new Carrier();
+
+        patrol.hit();
+
+        grid.placeShip(patrol, new Coordinate('a', 1), 'h');
+        grid.placeShip(carrier, a0, 'v');
+
+        Cell[][] cells = grid.getGrid();
+
+        Assertions.assertTrue(cells[0][1].getShip() instanceof Patrol);
+        Assertions.assertTrue(cells[0][2].getShip() instanceof Patrol);
+        Assertions.assertNull(cells[0][3].getShip());
+        Assertions.assertEquals(cells[0][1].getShip().hit(), Ship.ShipState.sunk);
+
+        Assertions.assertTrue(cells[0][0].getShip() instanceof Carrier);
+        Assertions.assertTrue(cells[1][0].getShip() instanceof Carrier);
+        Assertions.assertEquals(cells[0][0].getShip().hit(), Ship.ShipState.floating);
+    }
+
+//    @Test
+//    void changes_to_copy_of_internal_grid_do_not_affect_internal_grid()
+//    {
+//        Ship patrol = new Patrol();
+//        grid.placeShip()
+//    }
 }
