@@ -1,5 +1,8 @@
 package edu.weberstate.cs3230;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by parker on 2/13/17.
  */
@@ -7,6 +10,8 @@ public class Grid {
 
     private int size;
     private Cell[][] grid;
+    private List<Ship> shipList = new ArrayList<Ship>();
+    private List<Coordinate> coordinateList = new ArrayList<Coordinate>();
 
     public Grid()
     {
@@ -29,7 +34,17 @@ public class Grid {
 
     public Cell[][] getGrid()
     {
-        return this.grid;
+        Cell[][] cells = new Cell[size][size];
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+
+            }
+        }
+
+        return cells;
     }
 
     public Cell.HitResult hit(Coordinate coord)
@@ -50,10 +65,11 @@ public class Grid {
         return size;
     }
 
-    public boolean placeShip(Ship ship, Coordinate coord, char orientation)
+    public boolean placeShip(Ship ship, Placement placement)
     {
-        int row = coord.getRow();
-        int col = coord.getCol();
+        int row = placement.getRow();
+        int col = placement.getCol();
+        char orientation = placement.getOrientation();
         int length = ship.getLength();
 
         if (shipCanFit(row, col, length, orientation))

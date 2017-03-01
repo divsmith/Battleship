@@ -11,6 +11,8 @@ class GridTest {
     private Grid grid;
     private static int DEFAULT_SIZE = 10;
     private static Coordinate a0 = new Coordinate('a', 0);
+    private static Placement a0v = new Placement('a', 0, 'v');
+    private static Placement a0h = new Placement('a', 0, 'h');
 
     @BeforeEach
     void setUp() {
@@ -42,7 +44,7 @@ class GridTest {
     void grid_returns_hit_when_hit()
     {
         Ship ship = new Patrol();
-        grid.placeShip(ship, a0, 'h');
+        grid.placeShip(ship, a0h);
 
         Assertions.assertEquals(Cell.HitResult.hit, grid.hit(a0));
     }
@@ -51,7 +53,7 @@ class GridTest {
     void grid_returns_alreadymarked_when_alreadyhit()
     {
         Ship ship = new Patrol();
-        grid.placeShip(ship, a0, 'h');
+        grid.placeShip(ship, a0h);
         grid.hit(a0);
 
         Assertions.assertEquals(Cell.HitResult.alreadyMarked, grid.hit(a0));
@@ -61,7 +63,7 @@ class GridTest {
     void grid_returns_sunk_when_sunk()
     {
         Ship ship = new Patrol();
-        grid.placeShip(ship, a0, 'h');
+        grid.placeShip(ship, a0h);
         grid.hit(a0);
 
         Assertions.assertEquals(Cell.HitResult.sunk, grid.hit(new Coordinate('a', 1)));
@@ -87,7 +89,7 @@ class GridTest {
     void ship_can_be_placed_on_grid_horizontally()
     {
         Ship ship = new Patrol();
-        Assertions.assertTrue(grid.placeShip(ship, a0, 'h'));
+        Assertions.assertTrue(grid.placeShip(ship, a0h));
         Assertions.assertSame(ship, grid.getShip(a0));
     }
 
@@ -95,7 +97,7 @@ class GridTest {
     void ship_can_be_placed_on_grid_vertically()
     {
         Ship ship = new Patrol();
-        Assertions.assertTrue(grid.placeShip(ship, a0, 'v'));
+        Assertions.assertTrue(grid.placeShip(ship, a0v));
         Assertions.assertSame(ship, grid.getShip(a0));
     }
 
@@ -103,7 +105,7 @@ class GridTest {
     void ship_spans_horizontal_length()
     {
         Ship ship = new Carrier();
-        grid.placeShip(ship, a0, 'h');
+        grid.placeShip(ship, a0h);
 
         Assertions.assertSame(ship, grid.getShip(a0));
         Assertions.assertSame(ship, grid.getShip(new Coordinate('a', 1)));
@@ -116,7 +118,7 @@ class GridTest {
     void ship_spans_vertical_length()
     {
         Ship ship = new Carrier();
-        grid.placeShip(ship, a0, 'v');
+        grid.placeShip(ship, a0v);
 
         Assertions.assertSame(ship, grid.getShip(a0));
         Assertions.assertSame(ship, grid.getShip(new Coordinate('b', 0)));
@@ -130,10 +132,10 @@ class GridTest {
     {
         Ship carrier = new Carrier();
         Ship sub = new Submarine();
-        grid.placeShip(carrier, a0, 'h');
+        grid.placeShip(carrier, a0h);
 
-        Assertions.assertFalse(grid.placeShip(sub, a0, 'h'));
-        Assertions.assertFalse(grid.placeShip(sub, new Coordinate('a', 4), 'h'));
+        Assertions.assertFalse(grid.placeShip(sub, a0h));
+        Assertions.assertFalse(grid.placeShip(sub, new Placement('a', 4, 'h')));
     }
 
     @Test
@@ -142,10 +144,10 @@ class GridTest {
         Ship patrol = new Patrol();
         Ship carrier = new Carrier();
 
-        grid.placeShip(patrol, new Coordinate('a', 2), 'h');
+        grid.placeShip(patrol, new Placement('a', 2, 'h'));
 
         // Ensure ship was not placed
-        Assertions.assertFalse(grid.placeShip(carrier, a0, 'h'));
+        Assertions.assertFalse(grid.placeShip(carrier, a0h));
 
         // Ensure original ship is still in place
         Assertions.assertSame(patrol, grid.getShip(new Coordinate('a', 2)));
@@ -162,10 +164,10 @@ class GridTest {
         Ship patrol = new Patrol();
         Ship carrier = new Carrier();
 
-        grid.placeShip(patrol, new Coordinate('c', 0), 'v');
+        grid.placeShip(patrol, new Placement('c', 0, 'v'));
 
         // Ensure ship was not placed
-        Assertions.assertFalse(grid.placeShip(carrier, a0, 'v'));
+        Assertions.assertFalse(grid.placeShip(carrier, a0v));
 
         // Ensure original ship is still in place
         Assertions.assertSame(patrol, grid.getShip(new Coordinate('c', 0)));
@@ -181,10 +183,10 @@ class GridTest {
     {
         Ship carrier = new Carrier();
 
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('@', 0), 'h'));
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('L', 0), 'h'));
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', -1), 'v'));
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 11), 'v'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('@', 0, 'h')));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('L', 0, 'h')));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('a', -1, 'v')));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('a', 11, 'v')));
     }
 
     @Test
@@ -192,8 +194,8 @@ class GridTest {
     {
         Ship carrier = new Carrier();
 
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 10), 'h'));
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('k', 0), 'v'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('a', 10, 'h')));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('k', 0, 'v')));
     }
 
     @Test
@@ -201,8 +203,8 @@ class GridTest {
     {
         Ship carrier = new Carrier();
 
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('a', 7), 'h'));
-        Assertions.assertFalse(grid.placeShip(carrier, new Coordinate('h', 0), 'v'));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('a', 7, 'h')));
+        Assertions.assertFalse(grid.placeShip(carrier, new Placement('h', 0, 'v')));
     }
 
     @Test
@@ -225,7 +227,7 @@ class GridTest {
     void copy_of_internal_grid_can_be_retrieved()
     {
         Ship patrol = new Patrol();
-        grid.placeShip(patrol, a0, 'h');
+        grid.placeShip(patrol, a0h);
 
         Assertions.assertTrue(grid.getGrid() instanceof Cell[][]);
     }
@@ -238,8 +240,8 @@ class GridTest {
 
         patrol.hit();
 
-        grid.placeShip(patrol, new Coordinate('a', 1), 'h');
-        grid.placeShip(carrier, a0, 'v');
+        grid.placeShip(patrol, new Placement('a', 1, 'h'));
+        grid.placeShip(carrier, a0v);
 
         Cell[][] cells = grid.getGrid();
 
@@ -253,10 +255,23 @@ class GridTest {
         Assertions.assertEquals(cells[0][0].getShip().hit(), Ship.ShipState.floating);
     }
 
-//    @Test
-//    void changes_to_copy_of_internal_grid_do_not_affect_internal_grid()
-//    {
-//        Ship patrol = new Patrol();
-//        grid.placeShip()
-//    }
+    @Test
+    void copy_of_grid_is_deep_copy_of_internal_grid()
+    {
+        Ship patrol = new Patrol();
+        grid.placeShip(patrol, a0h);
+
+        // Hit patrol from copy of grid.
+        Cell[][] cells = grid.getGrid();
+        cells[0][0].hit();
+
+        // Verify that internal patrol has not been hit
+        Assertions.assertEquals(0, patrol.getHits());
+
+        // Hit a cell in cells
+        cells[1][1].hit();
+
+        // Verify that cell hasn't already been hit in grid
+        Assertions.assertNotEquals(Cell.HitResult.alreadyMarked, grid.hit(new Coordinate('b', 1)));
+    }
 }
