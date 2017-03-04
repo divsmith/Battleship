@@ -22,6 +22,14 @@ abstract public class Ship {
         this.shipState = ShipState.floating;
     }
 
+    protected Ship(Ship ship)
+    {
+        this.name = ship.getName();
+        this.length = ship.getLength();
+        this.hits = ship.hits;
+        this.shipState = ship.shipState;
+    }
+
     public String getName()
     {
         return this.name;
@@ -37,6 +45,11 @@ abstract public class Ship {
         return this.hits;
     }
 
+    public ShipState getShipState()
+    {
+        return this.shipState;
+    }
+
     public ShipState hit()
     {
         hits++;
@@ -47,5 +60,15 @@ abstract public class Ship {
         }
 
         return this.shipState;
+    }
+
+    protected void setHits(int hits)
+    {
+        this.hits = hits;
+    }
+
+    protected void setShipState(ShipState shipState)
+    {
+        this.shipState = shipState;
     }
 }

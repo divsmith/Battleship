@@ -54,4 +54,34 @@ class PatrolTest {
         Assertions.assertEquals(ship.getHits(), 2);
     }
 
+    @Test
+    void patrol_copy_is_returns_different_object()
+    {
+        Patrol patrol = new Patrol(ship);
+        Assertions.assertNotSame(ship, patrol);
+    }
+
+    @Test
+    void patrol_copy_constructor_copyies_all_properties()
+    {
+        ship.hit();
+        Patrol patrol = new Patrol(ship);
+
+        Assertions.assertEquals(ship.getHits(), patrol.getHits());
+        Assertions.assertEquals(ship.getShipState(), patrol.getShipState());
+        Assertions.assertEquals(ship.getLength(), patrol.getLength());
+        Assertions.assertEquals(ship.getName(), patrol.getName());
+        Assertions.assertEquals(ship.getClass(), patrol.getClass());
+    }
+
+    @Test
+    void patrol_copy_is_deep_copy()
+    {
+        Patrol patrol = new Patrol(ship);
+        ship.hit();
+        ship.hit();
+
+        Assertions.assertNotEquals(ship.getHits(), patrol.getHits());
+        Assertions.assertNotEquals(ship.getShipState(), patrol.getShipState());
+    }
 }
