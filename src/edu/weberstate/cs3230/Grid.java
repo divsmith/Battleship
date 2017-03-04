@@ -20,27 +20,27 @@ public class Grid {
 
     public Grid(int size)
     {
-        grid = new Cell[size][size];
         this.size = size;
+
+        this.grid = initializeCells(this.size);
+    }
+
+    public Cell[][] getGrid()
+    {
+        Cell[][] cells = this.initializeCells(this.size);
+
+        return cells;
+    }
+
+    private Cell[][] initializeCells(int size)
+    {
+        Cell[][] cells = new Cell[size][size];
 
         for(int i = 0; i < size; i++)
         {
             for (int j = 0; j < size; j++)
             {
-                grid[i][j] = new Cell();
-            }
-        }
-    }
-
-    public Cell[][] getGrid()
-    {
-        Cell[][] cells = new Cell[size][size];
-
-        for (int i = 0; i < size; i++)
-        {
-            for (int j = 0; j < size; j++)
-            {
-
+                cells[i][j] = new Cell();
             }
         }
 
