@@ -61,14 +61,4 @@ abstract public class Ship {
 
         return this.shipState;
     }
-
-    protected void setHits(int hits)
-    {
-        this.hits = hits;
-    }
-
-    protected void setShipState(ShipState shipState)
-    {
-        this.shipState = shipState;
-    }
 }

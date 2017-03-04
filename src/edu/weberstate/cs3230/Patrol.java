@@ -13,9 +13,6 @@ public class Patrol extends Ship {
 
     public Patrol(Patrol ship)
     {
-        super(NAME, LENGTH);
-
-        this.setHits(ship.getHits());
-        this.setShipState(ship.getShipState());
+        super(ship);
     }
 }
