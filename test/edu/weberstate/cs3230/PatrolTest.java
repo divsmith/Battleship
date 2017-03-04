@@ -62,7 +62,7 @@ class PatrolTest {
     }
 
     @Test
-    void patrol_copy_constructor_copyies_all_properties()
+    void patrol_copy_constructor_copies_all_properties()
     {
         ship.hit();
         Patrol patrol = new Patrol(ship);
