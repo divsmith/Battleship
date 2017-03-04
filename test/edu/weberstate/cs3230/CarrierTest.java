@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * Created by parker on 2/12/17.
  */
 class CarrierTest {
-    private Ship ship;
+    private Carrier ship;
     private static String NAME = "Carrier";
     private static int LENGTH = 5;
 
@@ -68,4 +68,37 @@ class CarrierTest {
         Assertions.assertEquals(ship.getHits(), 6);
     }
 
+    @Test
+    void carrier_copy_is_returns_different_object()
+    {
+        Carrier carrier = new Carrier(ship);
+        Assertions.assertNotSame(ship, carrier);
+    }
+
+    @Test
+    void carrier_copy_constructor_copies_all_properties()
+    {
+        ship.hit();
+        Carrier carrier = new Carrier(ship);
+
+        Assertions.assertEquals(ship.getHits(), carrier.getHits());
+        Assertions.assertEquals(ship.getShipState(), carrier.getShipState());
+        Assertions.assertEquals(ship.getLength(), carrier.getLength());
+        Assertions.assertEquals(ship.getName(), carrier.getName());
+        Assertions.assertEquals(ship.getClass(), carrier.getClass());
+    }
+
+    @Test
+    void carrier_copy_is_deep_copy()
+    {
+        Carrier carrier = new Carrier(ship);
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        ship.hit();
+
+        Assertions.assertNotEquals(ship.getHits(), carrier.getHits());
+        Assertions.assertNotEquals(ship.getShipState(), carrier.getShipState());
+    }
 }

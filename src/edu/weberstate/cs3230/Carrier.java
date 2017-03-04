@@ -7,7 +7,12 @@ public class Carrier extends Ship {
     private static String NAME = "Carrier";
     private static int LENGTH = 5;
 
-    protected Carrier() {
+    public Carrier() {
         super(NAME, LENGTH);
+    }
+
+    public Carrier(Carrier ship)
+    {
+        super(ship);
     }
 }
