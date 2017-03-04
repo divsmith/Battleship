@@ -32,6 +32,11 @@ public class Cell {
         this.status = CellStatus.unmarked;
     }
 
+    public Cell(Cell cell)
+    {
+        this.status = cell.status;
+    }
+
     public boolean hasShip()
     {
         return this.hasShip;

@@ -103,4 +103,34 @@ class CellTest {
         Assertions.assertEquals(CellStatus.hit, cell.getStatus());
     }
 
+    @Test
+    void cell_copy_constructor_returns_correct_type()
+    {
+        Cell copy = new Cell(cell);
+        Assertions.assertTrue(copy instanceof Cell);
+    }
+
+    @Test
+    void cell_copy_constructor_returns_different_object()
+    {
+        Cell copy = new Cell(cell);
+        Assertions.assertNotSame(cell, copy);
+    }
+
+    @Test
+    void cell_copy_has_correct_properties()
+    {
+        Cell copy = new Cell(cell);
+        Assertions.assertEquals(cell.getStatus(), copy.getStatus());
+    }
+
+    @Test
+    void cell_does_not_copy_ship_reference_or_has_ship()
+    {
+        cell.setShip(ship);
+        Cell copy = new Cell(cell);
+
+        Assertions.assertFalse(copy.hasShip());
+        Assertions.assertNull(copy.getShip());
+    }
 }
