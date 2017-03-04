@@ -232,46 +232,46 @@ class GridTest {
         Assertions.assertTrue(grid.getGrid() instanceof Cell[][]);
     }
 
-    @Test
-    void copy_of_internal_grid_is_correct()
-    {
-        Ship patrol = new Patrol();
-        Ship carrier = new Carrier();
-
-        patrol.hit();
-
-        grid.placeShip(patrol, new Placement('a', 1, 'h'));
-        grid.placeShip(carrier, a0v);
-
-        Cell[][] cells = grid.getGrid();
-
-        Assertions.assertTrue(cells[0][1].getShip() instanceof Patrol);
-        Assertions.assertTrue(cells[0][2].getShip() instanceof Patrol);
-        Assertions.assertNull(cells[0][3].getShip());
-        Assertions.assertEquals(cells[0][1].getShip().hit(), Ship.ShipState.sunk);
-
-        Assertions.assertTrue(cells[0][0].getShip() instanceof Carrier);
-        Assertions.assertTrue(cells[1][0].getShip() instanceof Carrier);
-        Assertions.assertEquals(cells[0][0].getShip().hit(), Ship.ShipState.floating);
-    }
-
-    @Test
-    void copy_of_grid_is_deep_copy_of_internal_grid()
-    {
-        Ship patrol = new Patrol();
-        grid.placeShip(patrol, a0h);
-
-        // Hit patrol from copy of grid.
-        Cell[][] cells = grid.getGrid();
-        cells[0][0].hit();
-
-        // Verify that internal patrol has not been hit
-        Assertions.assertEquals(0, patrol.getHits());
-
-        // Hit a cell in cells
-        cells[1][1].hit();
-
-        // Verify that cell hasn't already been hit in grid
-        Assertions.assertNotEquals(Cell.HitResult.alreadyMarked, grid.hit(new Coordinate('b', 1)));
-    }
+//    @Test
+//    void copy_of_internal_grid_is_correct()
+//    {
+//        Ship patrol = new Patrol();
+//        Ship carrier = new Carrier();
+//
+//        patrol.hit();
+//
+//        grid.placeShip(patrol, new Placement('a', 1, 'h'));
+//        grid.placeShip(carrier, a0v);
+//
+//        Cell[][] cells = grid.getGrid();
+//
+//        Assertions.assertTrue(cells[0][1].getShip() instanceof Patrol);
+//        Assertions.assertTrue(cells[0][2].getShip() instanceof Patrol);
+//        Assertions.assertNull(cells[0][3].getShip());
+//        Assertions.assertEquals(cells[0][1].getShip().hit(), Ship.ShipState.sunk);
+//
+//        Assertions.assertTrue(cells[0][0].getShip() instanceof Carrier);
+//        Assertions.assertTrue(cells[1][0].getShip() instanceof Carrier);
+//        Assertions.assertEquals(cells[0][0].getShip().hit(), Ship.ShipState.floating);
+//    }
+//
+//    @Test
+//    void copy_of_grid_is_deep_copy_of_internal_grid()
+//    {
+//        Ship patrol = new Patrol();
+//        grid.placeShip(patrol, a0h);
+//
+//        // Hit patrol from copy of grid.
+//        Cell[][] cells = grid.getGrid();
+//        cells[0][0].hit();
+//
+//        // Verify that internal patrol has not been hit
+//        Assertions.assertEquals(0, patrol.getHits());
+//
+//        // Hit a cell in cells
+//        cells[1][1].hit();
+//
+//        // Verify that cell hasn't already been hit in grid
+//        Assertions.assertNotEquals(Cell.HitResult.alreadyMarked, grid.hit(new Coordinate('b', 1)));
+//    }
 }
