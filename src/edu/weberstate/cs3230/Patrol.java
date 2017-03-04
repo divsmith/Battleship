@@ -15,4 +15,9 @@ public class Patrol extends Ship {
     {
         super(ship);
     }
+
+    public Patrol copy()
+    {
+        return new Patrol(this);
+    }
 }

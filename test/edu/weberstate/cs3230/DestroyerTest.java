@@ -63,14 +63,14 @@ class DestroyerTest {
     @Test
     void destroyer_copy_is_correct_type()
     {
-        Destroyer destroyer = new Destroyer(ship);
+        Destroyer destroyer = ship.copy();
         Assertions.assertTrue(destroyer instanceof Destroyer);
     }
 
     @Test
     void destroyer_copy_is_returns_different_object()
     {
-        Destroyer destroyer = new Destroyer(ship);
+        Destroyer destroyer = ship.copy();
         Assertions.assertNotSame(ship, destroyer);
     }
 
@@ -78,7 +78,7 @@ class DestroyerTest {
     void destroyer_copy_constructor_copies_all_properties()
     {
         ship.hit();
-        Destroyer destroyer = new Destroyer(ship);
+        Destroyer destroyer = ship.copy();
 
         Assertions.assertEquals(ship.getHits(), destroyer.getHits());
         Assertions.assertEquals(ship.getShipState(), destroyer.getShipState());
@@ -90,7 +90,7 @@ class DestroyerTest {
     @Test
     void destroyer_copy_is_deep_copy()
     {
-        Destroyer destroyer = new Destroyer(ship);
+        Destroyer destroyer = ship.copy();
         ship.hit();
         ship.hit();
         ship.hit();

@@ -67,14 +67,14 @@ class BattleshipTest {
     @Test
     void battleship_copy_is_correct_type()
     {
-        Battleship battleship = new Battleship(ship);
+        Battleship battleship = ship.copy();
         Assertions.assertTrue(battleship instanceof Battleship);
     }
 
     @Test
     void battleship_copy_is_returns_different_object()
     {
-        Battleship battleship = new Battleship(ship);
+        Battleship battleship = ship.copy();
         Assertions.assertNotSame(ship, battleship);
     }
 
@@ -82,7 +82,7 @@ class BattleshipTest {
     void battleship_copy_constructor_copies_all_properties()
     {
         ship.hit();
-        Battleship battleship = new Battleship(ship);
+        Battleship battleship = ship.copy();
 
         Assertions.assertEquals(ship.getHits(), battleship.getHits());
         Assertions.assertEquals(ship.getShipState(), battleship.getShipState());
@@ -94,7 +94,7 @@ class BattleshipTest {
     @Test
     void battleship_copy_is_deep_copy()
     {
-        Battleship battleship = new Battleship(ship);
+        Battleship battleship = ship.copy();
         ship.hit();
         ship.hit();
         ship.hit();

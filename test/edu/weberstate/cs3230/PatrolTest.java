@@ -57,14 +57,14 @@ class PatrolTest {
     @Test
     void patrol_copy_is_correct_type()
     {
-        Patrol patrol = new Patrol(ship);
+        Patrol patrol = ship.copy();
         Assertions.assertTrue(patrol instanceof Patrol);
     }
 
     @Test
     void patrol_copy_is_returns_different_object()
     {
-        Patrol patrol = new Patrol(ship);
+        Patrol patrol = ship.copy();
         Assertions.assertNotSame(ship, patrol);
     }
 
@@ -72,7 +72,7 @@ class PatrolTest {
     void patrol_copy_constructor_copies_all_properties()
     {
         ship.hit();
-        Patrol patrol = new Patrol(ship);
+        Patrol patrol = ship.copy();
 
         Assertions.assertEquals(ship.getHits(), patrol.getHits());
         Assertions.assertEquals(ship.getShipState(), patrol.getShipState());
@@ -84,7 +84,7 @@ class PatrolTest {
     @Test
     void patrol_copy_is_deep_copy()
     {
-        Patrol patrol = new Patrol(ship);
+        Patrol patrol = ship.copy();
         ship.hit();
         ship.hit();
 

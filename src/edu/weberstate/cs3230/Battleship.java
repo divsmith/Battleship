@@ -15,4 +15,9 @@ public class Battleship extends Ship {
     {
         super(ship);
     }
+
+    public Battleship copy()
+    {
+        return new Battleship(this);
+    }
 }

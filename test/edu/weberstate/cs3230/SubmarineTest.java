@@ -61,14 +61,14 @@ class SubmarineTest {
     @Test
     void submarine_copy_is_correct_type()
     {
-        Submarine submarine = new Submarine(ship);
+        Submarine submarine = ship.copy();
         Assertions.assertTrue(submarine instanceof Submarine);
     }
 
     @Test
     void submarine_copy_is_returns_different_object()
     {
-        Submarine submarine = new Submarine(ship);
+        Submarine submarine = ship.copy();
         Assertions.assertNotSame(ship, submarine);
     }
 
@@ -76,7 +76,7 @@ class SubmarineTest {
     void submarine_copy_constructor_copies_all_properties()
     {
         ship.hit();
-        Submarine submarine = new Submarine(ship);
+        Submarine submarine = ship.copy();
 
         Assertions.assertEquals(ship.getHits(), submarine.getHits());
         Assertions.assertEquals(ship.getShipState(), submarine.getShipState());
@@ -88,7 +88,7 @@ class SubmarineTest {
     @Test
     void submarine_copy_is_deep_copy()
     {
-        Submarine submarine = new Submarine(ship);
+        Submarine submarine = ship.copy();
         ship.hit();
         ship.hit();
         ship.hit();

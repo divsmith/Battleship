@@ -30,6 +30,8 @@ abstract public class Ship {
         this.shipState = ship.shipState;
     }
 
+    abstract public Ship copy();
+
     public String getName()
     {
         return this.name;

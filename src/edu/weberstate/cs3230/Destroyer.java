@@ -15,4 +15,9 @@ public class Destroyer extends Ship {
     {
         super(ship);
     }
+
+    public Destroyer copy()
+    {
+        return new Destroyer(this);
+    }
 }

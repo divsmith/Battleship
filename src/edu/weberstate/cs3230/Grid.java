@@ -27,7 +27,20 @@ public class Grid {
 
     public Cell[][] getGrid()
     {
-        Cell[][] cells = this.initializeCells(this.size);
+        Cell[][] cells = new Cell[size][size];
+
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                cells[i][j] = new Cell(grid[i][j]);
+            }
+        }
+
+        for (int x = 0; x < shipList.size(); x++)
+        {
+
+        }
 
         return cells;
     }

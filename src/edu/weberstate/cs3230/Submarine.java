@@ -15,4 +15,9 @@ public class Submarine extends Ship {
     {
         super(ship);
     }
+
+    public Submarine copy()
+    {
+        return new Submarine(this);
+    }
 }

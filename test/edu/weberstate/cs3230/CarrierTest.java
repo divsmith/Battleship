@@ -71,14 +71,14 @@ class CarrierTest {
     @Test
     void carrier_copy_is_correct_type()
     {
-        Carrier carrier = new Carrier(ship);
+        Carrier carrier = ship.copy();
         Assertions.assertTrue(carrier instanceof Carrier);
     }
 
     @Test
     void carrier_copy_is_returns_different_object()
     {
-        Carrier carrier = new Carrier(ship);
+        Carrier carrier = ship.copy();
         Assertions.assertNotSame(ship, carrier);
     }
 
@@ -86,7 +86,7 @@ class CarrierTest {
     void carrier_copy_constructor_copies_all_properties()
     {
         ship.hit();
-        Carrier carrier = new Carrier(ship);
+        Carrier carrier = ship.copy();
 
         Assertions.assertEquals(ship.getHits(), carrier.getHits());
         Assertions.assertEquals(ship.getShipState(), carrier.getShipState());
@@ -98,7 +98,7 @@ class CarrierTest {
     @Test
     void carrier_copy_is_deep_copy()
     {
-        Carrier carrier = new Carrier(ship);
+        Carrier carrier = ship.copy();
         ship.hit();
         ship.hit();
         ship.hit();

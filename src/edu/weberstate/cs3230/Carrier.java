@@ -15,4 +15,9 @@ public class Carrier extends Ship {
     {
         super(ship);
     }
+
+    public Carrier copy()
+    {
+        return new Carrier(this);
+    }
 }
