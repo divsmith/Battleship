@@ -65,6 +65,13 @@ class BattleshipTest {
     }
 
     @Test
+    void battleship_copy_is_correct_type()
+    {
+        Battleship battleship = new Battleship(ship);
+        Assertions.assertTrue(battleship instanceof Battleship);
+    }
+
+    @Test
     void battleship_copy_is_returns_different_object()
     {
         Battleship battleship = new Battleship(ship);

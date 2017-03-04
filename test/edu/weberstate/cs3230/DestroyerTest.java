@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * Created by parker on 2/12/17.
  */
 class DestroyerTest {
-    private Ship ship;
+    private Destroyer ship;
     private static String NAME = "Destroyer";
     private static int LENGTH = 3;
 
@@ -58,6 +58,45 @@ class DestroyerTest {
         Assertions.assertEquals(ship.getHits(), 3);
         ship.hit();
         Assertions.assertEquals(ship.getHits(), 4);
+    }
+
+    @Test
+    void destroyer_copy_is_correct_type()
+    {
+        Destroyer destroyer = new Destroyer(ship);
+        Assertions.assertTrue(destroyer instanceof Destroyer);
+    }
+
+    @Test
+    void destroyer_copy_is_returns_different_object()
+    {
+        Destroyer destroyer = new Destroyer(ship);
+        Assertions.assertNotSame(ship, destroyer);
+    }
+
+    @Test
+    void destroyer_copy_constructor_copies_all_properties()
+    {
+        ship.hit();
+        Destroyer destroyer = new Destroyer(ship);
+
+        Assertions.assertEquals(ship.getHits(), destroyer.getHits());
+        Assertions.assertEquals(ship.getShipState(), destroyer.getShipState());
+        Assertions.assertEquals(ship.getLength(), destroyer.getLength());
+        Assertions.assertEquals(ship.getName(), destroyer.getName());
+        Assertions.assertEquals(ship.getClass(), destroyer.getClass());
+    }
+
+    @Test
+    void destroyer_copy_is_deep_copy()
+    {
+        Destroyer destroyer = new Destroyer(ship);
+        ship.hit();
+        ship.hit();
+        ship.hit();
+
+        Assertions.assertNotEquals(ship.getHits(), destroyer.getHits());
+        Assertions.assertNotEquals(ship.getShipState(), destroyer.getShipState());
     }
 
 }

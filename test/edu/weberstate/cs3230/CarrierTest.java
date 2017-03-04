@@ -69,6 +69,13 @@ class CarrierTest {
     }
 
     @Test
+    void carrier_copy_is_correct_type()
+    {
+        Carrier carrier = new Carrier(ship);
+        Assertions.assertTrue(carrier instanceof Carrier);
+    }
+
+    @Test
     void carrier_copy_is_returns_different_object()
     {
         Carrier carrier = new Carrier(ship);

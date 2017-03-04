@@ -55,6 +55,13 @@ class PatrolTest {
     }
 
     @Test
+    void patrol_copy_is_correct_type()
+    {
+        Patrol patrol = new Patrol(ship);
+        Assertions.assertTrue(patrol instanceof Patrol);
+    }
+
+    @Test
     void patrol_copy_is_returns_different_object()
     {
         Patrol patrol = new Patrol(ship);

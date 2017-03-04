@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * Created by parker on 2/12/17.
  */
 class SubmarineTest {
-    private Ship ship;
+    private Submarine ship;
     private static String NAME = "Submarine";
     private static int LENGTH = 3;
 
@@ -58,4 +58,44 @@ class SubmarineTest {
         Assertions.assertEquals(ship.getHits(), 3);
     }
 
+    @Test
+    void submarine_copy_is_correct_type()
+    {
+        Submarine submarine = new Submarine(ship);
+        Assertions.assertTrue(submarine instanceof Submarine);
+    }
+
+    @Test
+    void submarine_copy_is_returns_different_object()
+    {
+        Submarine submarine = new Submarine(ship);
+        Assertions.assertNotSame(ship, submarine);
+    }
+
+    @Test
+    void submarine_copy_constructor_copies_all_properties()
+    {
+        ship.hit();
+        Submarine submarine = new Submarine(ship);
+
+        Assertions.assertEquals(ship.getHits(), submarine.getHits());
+        Assertions.assertEquals(ship.getShipState(), submarine.getShipState());
+        Assertions.assertEquals(ship.getLength(), submarine.getLength());
+        Assertions.assertEquals(ship.getName(), submarine.getName());
+        Assertions.assertEquals(ship.getClass(), submarine.getClass());
+    }
+
+    @Test
+    void submarine_copy_is_deep_copy()
+    {
+        Submarine submarine = new Submarine(ship);
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        ship.hit();
+
+        Assertions.assertNotEquals(ship.getHits(), submarine.getHits());
+        Assertions.assertNotEquals(ship.getShipState(), submarine.getShipState());
+    }
 }

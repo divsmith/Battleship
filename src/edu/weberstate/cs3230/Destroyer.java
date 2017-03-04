@@ -7,7 +7,12 @@ public class Destroyer extends Ship {
     private static String NAME = "Destroyer";
     private static int LENGTH = 3;
 
-    protected Destroyer() {
+    public Destroyer() {
         super(NAME, LENGTH);
+    }
+
+    public Destroyer(Destroyer ship)
+    {
+        super(ship);
     }
 }
