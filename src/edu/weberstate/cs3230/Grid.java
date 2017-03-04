@@ -65,7 +65,7 @@ public class Grid {
         return size;
     }
 
-    public boolean placeShip(Ship ship, Placement placement)
+    public boolean placeShip(Ship ship, Placement placement, Cell[][] grid)
     {
         int row = placement.getRow();
         int col = placement.getCol();
@@ -100,6 +100,11 @@ public class Grid {
         }
 
         return false;
+    }
+
+    public boolean placeShip(Ship ship, Placement placement)
+    {
+        return this.placeShip(ship, placement, this.grid);
     }
 
     protected boolean shipCanFit(int row, int col, int length, char orientation)
