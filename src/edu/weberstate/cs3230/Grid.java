@@ -41,7 +41,7 @@ public class Grid {
         {
             Ship ship = shipList.get(x).copy();
             Placement placement = placementList.get(x);
-            placeShip(ship, placement, cells);
+            placeShip(ship, placement, cells, false);
         }
 
         return cells;
@@ -80,7 +80,7 @@ public class Grid {
         return size;
     }
 
-    public boolean placeShip(Ship ship, Placement placement, Cell[][] grid)
+    public boolean placeShip(Ship ship, Placement placement, Cell[][] grid, boolean addToLists)
     {
         int row = placement.getRow();
         int col = placement.getCol();
@@ -108,8 +108,11 @@ public class Grid {
                 }
             }
 
-            shipList.add(ship);
-            placementList.add(placement);
+            if (addToLists)
+            {
+                shipList.add(ship);
+                placementList.add(placement);
+            }
 
             return true;
         }
@@ -119,7 +122,7 @@ public class Grid {
 
     public boolean placeShip(Ship ship, Placement placement)
     {
-        return this.placeShip(ship, placement, this.grid);
+        return this.placeShip(ship, placement, this.grid, true);
     }
 
     protected boolean shipCanFit(int row, int col, int length, char orientation, Cell[][] grid)
