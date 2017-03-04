@@ -39,7 +39,9 @@ public class Grid {
 
         for (int x = 0; x < shipList.size(); x++)
         {
-
+            Ship ship = shipList.get(x).copy();
+            Placement placement = placementList.get(x);
+            placeShip(ship, placement, cells);
         }
 
         return cells;
@@ -85,7 +87,7 @@ public class Grid {
         char orientation = placement.getOrientation();
         int length = ship.getLength();
 
-        if (shipCanFit(row, col, length, orientation))
+        if (shipCanFit(row, col, length, orientation, grid))
         {
             for (int i = 0; i < ship.getLength(); i++)
             {
@@ -120,7 +122,7 @@ public class Grid {
         return this.placeShip(ship, placement, this.grid);
     }
 
-    protected boolean shipCanFit(int row, int col, int length, char orientation)
+    protected boolean shipCanFit(int row, int col, int length, char orientation, Cell[][] grid)
     {
         for (int i = 0; i < length; i++)
         {
