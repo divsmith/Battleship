@@ -11,7 +11,7 @@ public class Grid {
     private int size;
     private Cell[][] grid;
     private List<Ship> shipList = new ArrayList<Ship>();
-    private List<Coordinate> coordinateList = new ArrayList<Coordinate>();
+    private List<Placement> placementList = new ArrayList<Placement>();
 
     public Grid()
     {
@@ -92,6 +92,9 @@ public class Grid {
                         throw new IllegalArgumentException("Orientation must be \'h\' or \'v\'");
                 }
             }
+
+            shipList.add(ship);
+            placementList.add(placement);
 
             return true;
         }
