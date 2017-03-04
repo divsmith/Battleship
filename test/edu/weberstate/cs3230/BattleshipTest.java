@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
  * Created by parker on 2/12/17.
  */
 class BattleshipTest {
-    private Ship ship;
+    private Battleship ship;
     private static String NAME = "Battleship";
     private static int LENGTH = 4;
 
@@ -64,4 +64,36 @@ class BattleshipTest {
         Assertions.assertEquals(ship.getHits(), 5);
     }
 
+    @Test
+    void battleship_copy_is_returns_different_object()
+    {
+        Battleship battleship = new Battleship(ship);
+        Assertions.assertNotSame(ship, battleship);
+    }
+
+    @Test
+    void battleship_copy_constructor_copies_all_properties()
+    {
+        ship.hit();
+        Battleship battleship = new Battleship(ship);
+
+        Assertions.assertEquals(ship.getHits(), battleship.getHits());
+        Assertions.assertEquals(ship.getShipState(), battleship.getShipState());
+        Assertions.assertEquals(ship.getLength(), battleship.getLength());
+        Assertions.assertEquals(ship.getName(), battleship.getName());
+        Assertions.assertEquals(ship.getClass(), battleship.getClass());
+    }
+
+    @Test
+    void battleship_copy_is_deep_copy()
+    {
+        Battleship battleship = new Battleship(ship);
+        ship.hit();
+        ship.hit();
+        ship.hit();
+        ship.hit();
+
+        Assertions.assertNotEquals(ship.getHits(), battleship.getHits());
+        Assertions.assertNotEquals(ship.getShipState(), battleship.getShipState());
+    }
 }

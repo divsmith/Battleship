@@ -7,7 +7,12 @@ public class Battleship extends Ship {
     private static String NAME = "Battleship";
     private static int LENGTH = 4;
 
-    protected Battleship() {
+    public Battleship() {
         super(NAME, LENGTH);
+    }
+
+    public Battleship(Battleship ship)
+    {
+        super(ship);
     }
 }
