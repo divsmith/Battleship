@@ -57,6 +57,38 @@ public class ConsoleGame {
         }
     }
 
+    protected int getShipSelectionIndex(List<Ship> ships)
+    {
+        String indexes = "";
+
+
+
+
+
+        return -1;
+    }
+
+    protected String getShipSelectionRegex(List<Ship> ships)
+    {
+        String regex = "(";
+
+        for (Ship ship : ships)
+        {
+            String name = ship.getName();
+
+            Character shipLabel = Character.toLowerCase(name.charAt(0));
+
+            // Add the lowercase and uppercase first letter of the ship name to the regex string
+            regex = regex.concat(shipLabel + "|" + Character.toUpperCase(shipLabel) + "|");
+        }
+
+        // Remove last | from regex string.
+        regex = regex.substring(0, regex.length() - 1);
+        regex = regex.concat(")");
+
+        return regex;
+    }
+
 //    private void placeShips(Player player) throws Exception {
 //        Battleship battleship = new Battleship();
 //        Carrier carrier = new Carrier();

@@ -4,9 +4,12 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,9 +41,8 @@ class ConsoleGameTest extends ConsoleGame{
 
         System.setOut(new PrintStream(output));
 
-        Player player = new Player();
-
         ConsoleGame game = new ConsoleGame();
+        Player player = new Player();
 
         game.printShipOptions(player.getUnplacedShips());
 
@@ -51,5 +53,32 @@ class ConsoleGameTest extends ConsoleGame{
                 "(s) - Submarine\n", output.toString());
 
         System.setOut(System.out);
+    }
+
+    @Test
+    void get_ship_selection_regex_returns_correct_regex_string()
+    {
+        List<Ship> ships = new ArrayList<Ship>();
+        ships.add(new Battleship());
+        ships.add(new Patrol());
+        ships.add(new Destroyer());
+
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals("(b|B|p|P|d|D)", game.getShipSelectionRegex(ships));
+    }
+
+    @Test
+    void get_ship_selection_correctly_filters_invalid_input()
+    {
+        ByteArrayInputStream yInputBytes = new ByteArrayInputStream("y".getBytes());
+
+        System.setIn(yInputBytes);
+
+        ConsoleGame game = new ConsoleGame();
+        Player player = new Player();
+
+        Assertions.assertEquals(-1, game.getShipSelectionIndex(player.getUnplacedShips()));
+
     }
 }
