@@ -32,113 +32,134 @@ public class ConsoleGame {
         // Place ships
         for (Player player : players)
         {
-            placeShips(player);
+            while(player.hasShipsToPlace())
+            {
+                // Print out player's ships
+
+                // Get valid ship selection
+
+                // Get valid placement
+
+                // Place ship
+            }
         }
     }
 
-    private void placeShips(Player player) throws Exception {
-        Battleship battleship = new Battleship();
-        Carrier carrier = new Carrier();
-        Destroyer destroyer = new Destroyer();
-        Patrol patrol = new Patrol();
-        Submarine submarine = new Submarine();
-
-        List<Ship> ships = new ArrayList<Ship>();
-        ships.add(battleship);
-        ships.add(carrier);
-        ships.add(destroyer);
-        ships.add(patrol);
-        ships.add(submarine);
-
-        while (ships.size() > 0)
+    protected void printPlayerShips(Player player)
+    {
+        for (Ship ship : player.getUnplacedShips())
         {
-            boolean validShip = false;
-            Character selection = '\0';
-            String regex = "";
+            String name = ship.getName();
 
-            // Get a valid selection for a remaining ship to place.
-            while (!validShip)
-            {
-                System.out.println("Player " + player.getPlayerNumber() + ": Select ship to place.\n");
-                regex = "";
-                regex = regex.concat("(");
+            Character shipLabel = Character.toLowerCase(name.charAt(0));
 
-                for (Ship ship : ships)
-                {
-                    String name = ship.getName();
-
-                    Character shipLabel = Character.toLowerCase(name.charAt(0));
-
-                    // Add the lowercase and uppercase first letter of the ship name to the regex string
-                    regex = regex.concat(shipLabel + "|" + Character.toUpperCase(shipLabel) + "|");
-
-                    // Add the lowercase first letter of the ship name to the matching
-                    System.out.println("(" + shipLabel + ") - " + name);
-                }
-
-                // Remove last | from regex string.
-                regex = regex.substring(0, regex.length() - 1);
-                regex = regex.concat(")");
-
-                if (scanner.hasNext(regex))
-                {
-                    // Grab the first character from the input and lowercase it.
-                    selection = Character.toLowerCase(scanner.next(regex).charAt(0));
-                    validShip = true;
-                }
-                else
-                {
-                    scanner.next();
-                    System.out.println("Invalid input. Please choose a valid option below.");
-                }
-            }
-
-            // Find the matching ship and index from the list.
-            int index = 0;
-            boolean found = false;
-            for (Ship ship : ships)
-            {
-                String name = ship.getName();
-                Character shipLabel = Character.toLowerCase(name.charAt(0));
-
-                if (shipLabel == selection)
-                {
-                    found = true;
-                    break;
-                }
-
-                index++;
-            }
-
-            if (!found)
-            {
-                throw new Exception("Ship (" + selection + ") was selected but not found in the ship list.");
-            }
-
-            // Have the user place the ship
-            valid = false;
-            while (!valid)
-            {
-                System.out.print("Enter coordinate of ship as rowcolumn, i.e. \"a0\": ");
-                regex = "([a-j][0-9])";
-                String input = "";
-
-                if (scanner.hasNext(regex))
-                {
-                    // Grab the first character from the input and lowercase it.
-                    input = scanner.next(regex);
-
-
-                    valid = true;
-                }
-                else
-                {
-                    scanner.next();
-                    System.out.println("Invalid input. Please choose a valid option below.");
-                }
-            }
+            System.out.println("(" + shipLabel + ") - " + name);
         }
     }
+
+//    private void placeShips(Player player) throws Exception {
+//        Battleship battleship = new Battleship();
+//        Carrier carrier = new Carrier();
+//        Destroyer destroyer = new Destroyer();
+//        Patrol patrol = new Patrol();
+//        Submarine submarine = new Submarine();
+//
+//        List<Ship> ships = new ArrayList<Ship>();
+//        ships.add(battleship);
+//        ships.add(carrier);
+//        ships.add(destroyer);
+//        ships.add(patrol);
+//        ships.add(submarine);
+//
+//        while (ships.size() > 0)
+//        {
+//            boolean validShip = false;
+//            Character selection = '\0';
+//            String regex = "";
+//
+//            // Get a valid selection for a remaining ship to place.
+//            while (!validShip)
+//            {
+//                System.out.println("Player " + player.getPlayerNumber() + ": Select ship to place.\n");
+//                regex = "";
+//                regex = regex.concat("(");
+//
+//                for (Ship ship : ships)
+//                {
+//                    String name = ship.getName();
+//
+//                    Character shipLabel = Character.toLowerCase(name.charAt(0));
+//
+//                    // Add the lowercase and uppercase first letter of the ship name to the regex string
+//                    regex = regex.concat(shipLabel + "|" + Character.toUpperCase(shipLabel) + "|");
+//
+//                    // Add the lowercase first letter of the ship name to the matching
+//                    System.out.println("(" + shipLabel + ") - " + name);
+//                }
+//
+//                // Remove last | from regex string.
+//                regex = regex.substring(0, regex.length() - 1);
+//                regex = regex.concat(")");
+//
+//                if (scanner.hasNext(regex))
+//                {
+//                    // Grab the first character from the input and lowercase it.
+//                    selection = Character.toLowerCase(scanner.next(regex).charAt(0));
+//                    validShip = true;
+//                }
+//                else
+//                {
+//                    scanner.next();
+//                    System.out.println("Invalid input. Please choose a valid option below.");
+//                }
+//            }
+//
+//            // Find the matching ship and index from the list.
+//            int index = 0;
+//            boolean found = false;
+//            for (Ship ship : ships)
+//            {
+//                String name = ship.getName();
+//                Character shipLabel = Character.toLowerCase(name.charAt(0));
+//
+//                if (shipLabel == selection)
+//                {
+//                    found = true;
+//                    break;
+//                }
+//
+//                index++;
+//            }
+//
+//            if (!found)
+//            {
+//                throw new Exception("Ship (" + selection + ") was selected but not found in the ship list.");
+//            }
+//
+//            // Have the user place the ship
+//            valid = false;
+//            while (!valid)
+//            {
+//                System.out.print("Enter coordinate of ship as rowcolumn, i.e. \"a0\": ");
+//                regex = "([a-j][0-9])";
+//                String input = "";
+//
+//                if (scanner.hasNext(regex))
+//                {
+//                    // Grab the first character from the input and lowercase it.
+//                    input = scanner.next(regex);
+//
+//
+//                    valid = true;
+//                }
+//                else
+//                {
+//                    scanner.next();
+//                    System.out.println("Invalid input. Please choose a valid option below.");
+//                }
+//            }
+//        }
+//    }
 
     private void getPlayerNames()
     {
