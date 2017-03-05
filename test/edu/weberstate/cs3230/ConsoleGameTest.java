@@ -50,6 +50,6 @@ class ConsoleGameTest extends ConsoleGame{
                 "(p) - Patrol\n" +
                 "(s) - Submarine\n", output.toString());
 
-        System.setOut(null);
+        System.setOut(System.out);
     }
 }
