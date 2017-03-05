@@ -20,20 +20,20 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class ConsoleGameTest extends ConsoleGame{
 
-//    @Test
-//    void play()
-//    {
-//        try {
-//            File file = new File("test/resources/ConsoleInput.txt");
-//            ConsoleGame game = new ConsoleGame(new Scanner(file));
-//
-//            game.play();
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
+    @Test
+    void play_game_test()
+    {
+        try {
+            File file = new File("test/resources/ConsoleInput.txt");
+            ConsoleGame game = new ConsoleGame(new Scanner(file), 10);
+
+            game.play();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     void ship_selection_output_is_correct()

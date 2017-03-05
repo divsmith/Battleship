@@ -159,6 +159,10 @@ public class ConsoleGame {
 
             return new Coordinate(input.charAt(0), Character.getNumericValue(input.charAt(1)));
         }
+        else
+        {
+            scanner.next();
+        }
 
         return null;
     }
@@ -193,6 +197,10 @@ public class ConsoleGame {
         if (scanner.hasNext("(h|v)"))
         {
             return new Character(scanner.next("(h|v)").charAt(0));
+        }
+        else
+        {
+            scanner.next();
         }
 
         return null;
