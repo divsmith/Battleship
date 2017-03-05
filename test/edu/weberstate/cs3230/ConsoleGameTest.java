@@ -73,12 +73,66 @@ class ConsoleGameTest extends ConsoleGame{
     {
         ByteArrayInputStream yInputBytes = new ByteArrayInputStream("y".getBytes());
 
+        List<Ship> ships = new ArrayList<Ship>();
+        ships.add(new Battleship());
+        ships.add(new Patrol());
+        ships.add(new Destroyer());
+
         System.setIn(yInputBytes);
 
         ConsoleGame game = new ConsoleGame();
-        Player player = new Player();
 
-        Assertions.assertEquals(-1, game.getShipSelectionIndex(player.getUnplacedShips()));
+        Assertions.assertEquals(-1, game.getShipSelectionIndex(ships, game.getShipSelectionRegex(ships)));
+    }
 
+    @Test
+    void get_ship_selection_correctly_filters_multicharacter_invalid_input()
+    {
+        ByteArrayInputStream asdfInputBytes = new ByteArrayInputStream("asdf".getBytes());
+
+        List<Ship> ships = new ArrayList<Ship>();
+        ships.add(new Battleship());
+        ships.add(new Patrol());
+        ships.add(new Destroyer());
+
+        System.setIn(asdfInputBytes);
+
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals(-1, game.getShipSelectionIndex(ships, game.getShipSelectionRegex(ships)));
+    }
+
+    @Test
+    void get_ship_selection_returns_correct_index_from_valid_input()
+    {
+        ByteArrayInputStream pInputBytes = new ByteArrayInputStream("p".getBytes());
+
+        List<Ship> ships = new ArrayList<Ship>();
+        ships.add(new Battleship());
+        ships.add(new Patrol());
+        ships.add(new Destroyer());
+
+        System.setIn(pInputBytes);
+
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals(1, game.getShipSelectionIndex(ships, game.getShipSelectionRegex(ships)));
+    }
+
+    @Test
+    void get_ship_selection_returns_correct_index_from_valid_uppercase_input()
+    {
+        ByteArrayInputStream pInputBytes = new ByteArrayInputStream("D".getBytes());
+
+        List<Ship> ships = new ArrayList<Ship>();
+        ships.add(new Battleship());
+        ships.add(new Patrol());
+        ships.add(new Destroyer());
+
+        System.setIn(pInputBytes);
+
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals(2, game.getShipSelectionIndex(ships, game.getShipSelectionRegex(ships)));
     }
 }

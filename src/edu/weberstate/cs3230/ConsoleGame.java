@@ -57,13 +57,27 @@ public class ConsoleGame {
         }
     }
 
-    protected int getShipSelectionIndex(List<Ship> ships)
+    protected int getShipSelectionIndex(List<Ship> ships, String regex)
     {
-        String indexes = "";
+        if (scanner.hasNext(regex))
+        {
+            int index = 0;
+            Character input = Character.toLowerCase(scanner.next(regex).charAt(0));
 
+            for (Ship ship : ships)
+            {
+                if (Character.toLowerCase(ship.getName().charAt(0)) == input)
+                {
+                    return index;
+                }
 
-
-
+                index++;
+            }
+        }
+        else
+        {
+            scanner.next();
+        }
 
         return -1;
     }
