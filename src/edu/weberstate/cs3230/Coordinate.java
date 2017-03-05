@@ -6,12 +6,19 @@ package edu.weberstate.cs3230;
 public class Coordinate {
     private int row;
     private int col;
+    private char rowChar;
 
     public Coordinate(char row, int col)
     {
         row = Character.toLowerCase(row);
+        rowChar = row;
         this.row = row - 'a';
         this.col = col;
+    }
+
+    public Coordinate(int row, int col)
+    {
+        this((char) (row + 'a'), col);
     }
 
     public int getRow()
@@ -22,5 +29,10 @@ public class Coordinate {
     public int getCol()
     {
         return col;
+    }
+
+    public char getRowChar()
+    {
+        return rowChar;
     }
 }

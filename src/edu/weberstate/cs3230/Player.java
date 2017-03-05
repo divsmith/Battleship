@@ -74,4 +74,9 @@ public class Player {
     {
         return this.ships;
     }
+
+    public Cell[][] getGrid()
+    {
+        return grid.getGrid();
+    }
 }

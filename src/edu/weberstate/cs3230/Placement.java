@@ -16,6 +16,11 @@ public class Placement extends Coordinate {
         this.orientation = orientation;
     }
 
+    public Placement(Coordinate coord, char orientation)
+    {
+        this(coord.getRowChar(), coord.getCol(), orientation);
+    }
+
     public char getOrientation()
     {
         return this.orientation;

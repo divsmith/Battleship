@@ -15,4 +15,15 @@ class PlacementTest {
         Placement placement = new Placement('a', 0, 'v');
         Assertions.assertEquals('v', placement.getOrientation());
     }
+
+    @Test
+    void constructor_from_coordinate_works()
+    {
+        Coordinate coord = new Coordinate('a', 0);
+        Placement placement = new Placement(coord, 'h');
+
+        Assertions.assertEquals(0, placement.getRow());
+        Assertions.assertEquals(0, placement.getCol());
+        Assertions.assertEquals('h', placement.getOrientation());
+    }
 }

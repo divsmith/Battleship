@@ -38,4 +38,19 @@ class CoordinateTest {
         Assertions.assertEquals(27, coord.getCol());
     }
 
+    @Test
+    void constructor_with_both_ints_works()
+    {
+        Coordinate coord = new Coordinate(0, 0);
+
+        Assertions.assertEquals(0, coord.getRow());
+        Assertions.assertEquals(0, coord.getCol());
+    }
+
+    @Test
+    void row_as_char_works_correctly()
+    {
+        Coordinate coord = new Coordinate('a', 0);
+        Assertions.assertEquals('a', coord.getRowChar());
+    }
 }

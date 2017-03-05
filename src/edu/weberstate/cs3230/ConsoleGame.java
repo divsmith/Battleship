@@ -8,18 +8,23 @@ import java.util.Scanner;
  * Created by parker on 2/6/17.
  */
 public class ConsoleGame {
+    private static int DEFAULT_SIZE = 10;
 
     Scanner scanner;
     List<Player> players = new ArrayList<Player>();
+    int gridSize;
 
     public ConsoleGame()
     {
-        this(new Scanner(System.in));
+        this(new Scanner(System.in), DEFAULT_SIZE);
     }
 
-    public ConsoleGame(Scanner scanner)
+    public ConsoleGame(Scanner scanner, int gridSize)
     {
         this.scanner = scanner;
+        this.gridSize = gridSize;
+
+        // Add grid size to players.
         players.add(new Player());
         players.add(new Player());
     }
@@ -30,19 +35,108 @@ public class ConsoleGame {
         getPlayerNames();
 
         // Place ships
+        placeShips();
+    }
+
+    protected void placeShips()
+    {
         for (Player player : players)
         {
             while(player.hasShipsToPlace())
             {
-                // Print out player's ships
+                List<Ship> ships = player.getUnplacedShips();
 
-                // Get valid ship selection
+                // Select the ship to place.
+                String shipSelectionRegex = getShipSelectionRegex(ships);
+                int index = -1;
 
-                // Get valid placement
+                printPlayerGrid(player.getGrid());
+
+                System.out.println(player.getName() + ", select a ship to place.");
+                do {
+                    printShipOptions(ships);
+                    index = getShipSelectionIndex(ships, shipSelectionRegex);
+
+                    if (index < 0)
+                    {
+                        System.out.println("Invalid ship. Please choose a valid selection below.");
+                    }
+                } while ( index < 0);
+
+
+                // Get a coordinate for the ship.
+                Coordinate coord = null;
+                String coordinateSelectionRegex = getCoordinateRegex();
+
+                System.out.println("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
+                do {
+                    coord = getUserCoordinateSelection(coordinateSelectionRegex);
+
+                    if (coord == null)
+                    {
+                        System.out.println("Invalid coordinate. Please enter coordinate a-j0-9: ");
+                    }
+                } while (coord == null);
+
+                // Get an orientation for the ship
+                Character orientation = null;
+
+                System.out.println("Enter the ship orientation (either 'v' or 'h'): ");
+                do {
+                    orientation = getOrientation();
+
+                    if (orientation == null)
+                    {
+                        System.out.println("Invalid orientation. Please enter 'v' or 'h': ");
+                    }
+                } while (orientation == null);
 
                 // Place ship
+                if (!player.placeShip(index, new Placement(coord, orientation)))
+                {
+                    System.out.println(ships.get(index).getName() + " cannot be placed " +
+                            (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
+                }
             }
         }
+    }
+
+    private void printPlayerGrid(Cell[][] grid) {
+        char row = 'a';
+
+        // Print header
+        System.out.print("  ");
+        for (int i = 0; i < gridSize; i++)
+        {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+        // Print out rows
+        for (int i = 0; i < gridSize; i++)
+        {
+            System.out.print(row++ + " ");
+
+            for (int j = 0; j < gridSize; j++)
+            {
+                if (grid[i][j].hasShip())
+                {
+                    System.out.print(Character.toUpperCase(grid[i][j].getShip().getName().charAt(0)) + " ");
+                }
+                else
+                {
+                    System.out.print("* ");
+                }
+            }
+
+            System.out.println();
+        }
+    }
+
+    protected String getCoordinateRegex()
+    {
+        // This should be dynamically generated based on grid size;
+        return "([a-j][0-9])";
     }
 
     protected void printShipOptions(List<Ship> ships)
@@ -55,6 +149,18 @@ public class ConsoleGame {
 
             System.out.println("(" + shipLabel + ") - " + name);
         }
+    }
+
+    protected Coordinate getUserCoordinateSelection(String regex)
+    {
+        if (scanner.hasNext(regex))
+        {
+            String input = scanner.next(regex);
+
+            return new Coordinate(input.charAt(0), Character.getNumericValue(input.charAt(1)));
+        }
+
+        return null;
     }
 
     protected int getShipSelectionIndex(List<Ship> ships, String regex)
@@ -82,6 +188,16 @@ public class ConsoleGame {
         return -1;
     }
 
+    protected Character getOrientation()
+    {
+        if (scanner.hasNext("(h|v)"))
+        {
+            return new Character(scanner.next("(h|v)").charAt(0));
+        }
+
+        return null;
+    }
+
     protected String getShipSelectionRegex(List<Ship> ships)
     {
         String regex = "(";
@@ -102,110 +218,6 @@ public class ConsoleGame {
 
         return regex;
     }
-
-//    private void placeShips(Player player) throws Exception {
-//        Battleship battleship = new Battleship();
-//        Carrier carrier = new Carrier();
-//        Destroyer destroyer = new Destroyer();
-//        Patrol patrol = new Patrol();
-//        Submarine submarine = new Submarine();
-//
-//        List<Ship> ships = new ArrayList<Ship>();
-//        ships.add(battleship);
-//        ships.add(carrier);
-//        ships.add(destroyer);
-//        ships.add(patrol);
-//        ships.add(submarine);
-//
-//        while (ships.size() > 0)
-//        {
-//            boolean validShip = false;
-//            Character selection = '\0';
-//            String regex = "";
-//
-//            // Get a valid selection for a remaining ship to place.
-//            while (!validShip)
-//            {
-//                System.out.println("Player " + player.getPlayerNumber() + ": Select ship to place.\n");
-//                regex = "";
-//                regex = regex.concat("(");
-//
-//                for (Ship ship : ships)
-//                {
-//                    String name = ship.getName();
-//
-//                    Character shipLabel = Character.toLowerCase(name.charAt(0));
-//
-//                    // Add the lowercase and uppercase first letter of the ship name to the regex string
-//                    regex = regex.concat(shipLabel + "|" + Character.toUpperCase(shipLabel) + "|");
-//
-//                    // Add the lowercase first letter of the ship name to the matching
-//                    System.out.println("(" + shipLabel + ") - " + name);
-//                }
-//
-//                // Remove last | from regex string.
-//                regex = regex.substring(0, regex.length() - 1);
-//                regex = regex.concat(")");
-//
-//                if (scanner.hasNext(regex))
-//                {
-//                    // Grab the first character from the input and lowercase it.
-//                    selection = Character.toLowerCase(scanner.next(regex).charAt(0));
-//                    validShip = true;
-//                }
-//                else
-//                {
-//                    scanner.next();
-//                    System.out.println("Invalid input. Please choose a valid option below.");
-//                }
-//            }
-//
-//            // Find the matching ship and index from the list.
-//            int index = 0;
-//            boolean found = false;
-//            for (Ship ship : ships)
-//            {
-//                String name = ship.getName();
-//                Character shipLabel = Character.toLowerCase(name.charAt(0));
-//
-//                if (shipLabel == selection)
-//                {
-//                    found = true;
-//                    break;
-//                }
-//
-//                index++;
-//            }
-//
-//            if (!found)
-//            {
-//                throw new Exception("Ship (" + selection + ") was selected but not found in the ship list.");
-//            }
-//
-//            // Have the user place the ship
-//            valid = false;
-//            while (!valid)
-//            {
-//                System.out.print("Enter coordinate of ship as rowcolumn, i.e. \"a0\": ");
-//                regex = "([a-j][0-9])";
-//                String input = "";
-//
-//                if (scanner.hasNext(regex))
-//                {
-//                    // Grab the first character from the input and lowercase it.
-//                    input = scanner.next(regex);
-//
-//
-//                    valid = true;
-//                }
-//                else
-//                {
-//                    scanner.next();
-//                    System.out.println("Invalid input. Please choose a valid option below.");
-//                }
-//            }
-//        }
-//    }
 
     private void getPlayerNames()
     {

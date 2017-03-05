@@ -1,5 +1,6 @@
 package edu.weberstate.cs3230;
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -134,5 +135,122 @@ class ConsoleGameTest extends ConsoleGame{
         ConsoleGame game = new ConsoleGame();
 
         Assertions.assertEquals(2, game.getShipSelectionIndex(ships, game.getShipSelectionRegex(ships)));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    void coordinate_regex_is_correctly_generated()
+    {
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals("([a-j][0-9])", game.getCoordinateRegex());
+    }
+
+    @Test
+    void get_coordinate_returns_null_when_invalid_input_is_given()
+    {
+        ByteArrayInputStream badInput = new ByteArrayInputStream("a".getBytes());
+        System.setIn(badInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertNull(game.getUserCoordinateSelection(game.getCoordinateRegex()));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_coordinate_returns_null_when_swapped_input_is_given()
+    {
+        ByteArrayInputStream badInput = new ByteArrayInputStream("2b".getBytes());
+        System.setIn(badInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertNull(game.getUserCoordinateSelection(game.getCoordinateRegex()));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_coordinate_returns_null_when_long_input_is_given()
+    {
+        ByteArrayInputStream badInput = new ByteArrayInputStream("a0234bdie".getBytes());
+        System.setIn(badInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertNull(game.getUserCoordinateSelection(game.getCoordinateRegex()));
+
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_coordinate_returns_coordinate_when_valid_input_is_given()
+    {
+        ByteArrayInputStream goodInput = new ByteArrayInputStream("a0".getBytes());
+        System.setIn(goodInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Coordinate coord = game.getUserCoordinateSelection(game.getCoordinateRegex());
+
+        Assertions.assertTrue(coord instanceof Coordinate);
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_coordinate_returns_correct_coordinate_when_valid_input_is_given()
+    {
+        ByteArrayInputStream goodInput = new ByteArrayInputStream("a0".getBytes());
+        System.setIn(goodInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Coordinate coord = game.getUserCoordinateSelection(game.getCoordinateRegex());
+
+        Assertions.assertEquals(0, coord.getRow());
+        Assertions.assertEquals(0, coord.getCol());
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_orientation_returns_null_when_invalid_input_is_given()
+    {
+        ByteArrayInputStream badInput = new ByteArrayInputStream("a".getBytes());
+        System.setIn(badInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertNull(game.getOrientation());
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_orientation_returns_null_when_long_invalid_input_is_given()
+    {
+        ByteArrayInputStream badInput = new ByteArrayInputStream("abd23ds".getBytes());
+        System.setIn(badInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertNull(game.getOrientation());
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_orientation_returns_character_when_v_input_is_given()
+    {
+        ByteArrayInputStream goodInput = new ByteArrayInputStream("v".getBytes());
+        System.setIn(goodInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals(new Character('v'), game.getOrientation());
+        System.setIn(System.in);
+    }
+
+    @Test
+    void get_orientation_returns_character_when_h_input_is_given()
+    {
+        ByteArrayInputStream goodInput = new ByteArrayInputStream("h".getBytes());
+        System.setIn(goodInput);
+        ConsoleGame game = new ConsoleGame();
+
+        Assertions.assertEquals(new Character('h'), game.getOrientation());
+        System.setIn(System.in);
     }
 }
