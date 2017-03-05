@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Created by parker on 3/4/17.
  */
-class PlayerTest extends Player{
+class PlayerTest {
     @Test
     void name_is_set_and_returned()
     {
