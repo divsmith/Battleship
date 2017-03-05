@@ -45,9 +45,9 @@ public class ConsoleGame {
         }
     }
 
-    protected void printPlayerShips(Player player)
+    protected void printShipOptions(List<Ship> ships)
     {
-        for (Ship ship : player.getUnplacedShips())
+        for (Ship ship : ships)
         {
             String name = ship.getName();
 

@@ -42,7 +42,7 @@ class ConsoleGameTest extends ConsoleGame{
 
         ConsoleGame game = new ConsoleGame();
 
-        game.printPlayerShips(player);
+        game.printShipOptions(player.getUnplacedShips());
 
         Assertions.assertEquals("(b) - Battleship\n" +
                 "(c) - Carrier\n" +
