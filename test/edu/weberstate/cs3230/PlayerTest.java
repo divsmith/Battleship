@@ -70,4 +70,12 @@ class PlayerTest {
 
         Assertions.assertFalse(player.placeShip(5, new Placement('a', 0, 'h')));
     }
+
+    @Test
+    void get_grid_returns_multidimensional_array_of_cells()
+    {
+        Player player = new Player();
+
+        Assertions.assertTrue(player.getGrid() instanceof Cell[][]);
+    }
 }
