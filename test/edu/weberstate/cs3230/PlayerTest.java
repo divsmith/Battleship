@@ -78,4 +78,64 @@ class PlayerTest {
 
         Assertions.assertTrue(player.getGrid() instanceof Cell[][]);
     }
+
+    @Test
+    void player_has_not_lost_before_placing_ships()
+    {
+        List<Ship> ships = new ArrayList<>();
+        ships.add(new Patrol());
+        ships.add(new Submarine());
+
+        Player player = new Player(ships);
+
+        Assertions.assertFalse(player.lost());
+    }
+
+    @Test
+    void player_has_not_lost_before_any_ships_sunk()
+    {
+        List<Ship> ships = new ArrayList<>();
+        ships.add(new Patrol());
+        ships.add(new Submarine());
+
+        Player player = new Player(ships);
+        player.placeShip(0, new Placement('a', 0, 'h'));
+        player.placeShip(0, new Placement('b', 0, 'h'));
+
+        Assertions.assertFalse(player.lost());
+    }
+
+    @Test
+    void player_has_not_lost_before_all_ships_sunk()
+    {
+        List<Ship> ships = new ArrayList<>();
+        ships.add(new Patrol());
+        ships.add(new Submarine());
+
+        Player player = new Player(ships);
+        player.placeShip(0, new Placement('a', 0, 'h'));
+        player.placeShip(0, new Placement('b', 0, 'h'));
+        player.hit(new Coordinate('a', 0));
+        player.hit(new Coordinate('b', 0));
+
+        Assertions.assertFalse(player.lost());
+    }
+
+    @Test
+    void player_loses_after_all_ships_sunk()
+    {
+        List<Ship> ships = new ArrayList<>();
+        ships.add(new Patrol());
+        ships.add(new Submarine());
+
+        Player player = new Player(ships);
+        player.placeShip(0, new Placement('a', 0, 'h'));
+        player.hit(new Coordinate('a', 0));
+        player.hit(new Coordinate('b', 0));
+        player.hit(new Coordinate('a', 1));
+        player.hit(new Coordinate('b', 1));
+        player.hit(new Coordinate('c', 1));
+
+        Assertions.assertTrue(player.lost());
+    }
 }

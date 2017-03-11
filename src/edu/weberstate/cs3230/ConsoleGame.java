@@ -36,6 +36,11 @@ public class ConsoleGame {
 
         // Place ships
         placeShips();
+
+//        while(!players.get(0).lost() && !players.get(1).lost())
+//        {
+//
+//        }
     }
 
     protected void placeShips()

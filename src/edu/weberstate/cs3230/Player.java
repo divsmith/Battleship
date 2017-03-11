@@ -1,6 +1,7 @@
 package edu.weberstate.cs3230;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -8,6 +9,7 @@ import java.util.List;
  */
 public class Player {
     private static String DEFAULT_NAME = "default";
+    private static Ship[] DEFAULT_SHIPS = {new Battleship(), new Carrier(), new Destroyer(), new Patrol(), new Submarine()};
 
     private Grid grid;
     protected List<Ship> ships = new ArrayList<Ship>();
@@ -21,15 +23,44 @@ public class Player {
 
     public Player(String name)
     {
+        this(name, new ArrayList<Ship>(Arrays.asList(DEFAULT_SHIPS)));
+    }
+
+    public Player(String name, List<Ship> unplacedShips)
+    {
         setName(name);
 
         grid = new Grid();
 
-        unplacedShips.add(new Battleship());
-        unplacedShips.add(new Carrier());
-        unplacedShips.add(new Destroyer());
-        unplacedShips.add(new Patrol());
-        unplacedShips.add(new Submarine());
+        this.unplacedShips = unplacedShips;
+    }
+
+    public Player(List<Ship> unplacedShips)
+    {
+        this(DEFAULT_NAME, unplacedShips);
+    }
+
+    public boolean lost()
+    {
+        if (ships.size() == 0)
+        {
+            return false;
+        }
+
+        for (Ship ship : ships)
+        {
+            if (ship.getShipState() == Ship.ShipState.floating)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Cell.HitResult hit(Coordinate coord)
+    {
+        return grid.hit(coord);
     }
 
     public boolean hasShipsToPlace()
