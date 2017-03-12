@@ -3,6 +3,7 @@ package edu.weberstate.cs3230;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Function;
 
 /**
  * Created by parker on 2/6/17.
@@ -37,10 +38,66 @@ public class ConsoleGame {
         // Place ships
         placeShips();
 
-//        while(!players.get(0).lost() && !players.get(1).lost())
-//        {
-//
-//        }
+        Player firingPlayer = players.get(0);
+        Player receivingPlayer = players.get(1);
+        Player tempPlayer;
+
+        // Check whether the firing player lost
+        // because the firing and receiving player
+        // will have swapped before this comparison occurs.
+        while (!firingPlayer.lost())
+        {
+            Coordinate coord = getCoordinate(firingPlayer.getName() +
+                    ", choose a coordinate to hit (i.e. 'a0'): ", receivingPlayer.getGrid(), true);
+
+            Cell.HitResult result = receivingPlayer.hit(coord);
+
+            System.out.println();
+            printOpponentGrid(receivingPlayer.getGrid());
+
+            if (result == Cell.HitResult.hit)
+            {
+                System.out.println("\nHIT!");
+            }
+            else
+            {
+                System.out.println("\nMiss");
+            }
+
+            System.out.println("----------------------");
+
+            tempPlayer = firingPlayer;
+            firingPlayer = receivingPlayer;
+            receivingPlayer = tempPlayer;
+        }
+    }
+
+    private Coordinate getCoordinate(String prompt, Cell[][] grid, boolean opponent)
+    {
+        Coordinate coord = null;
+        String coordinateSelectionRegex = getCoordinateRegex();
+
+        // Need to find a cleaner way of doing this.
+        if (opponent)
+        {
+            printOpponentGrid(grid);
+        }
+        else
+        {
+            printPlayerGrid(grid);
+        }
+
+        System.out.print("\n" + prompt);
+        do {
+            coord = getUserCoordinateSelection(coordinateSelectionRegex);
+
+            if (coord == null)
+            {
+                System.out.print("Invalid coordinate. Please enter coordinate a-j0-9: ");
+            }
+        } while (coord == null);
+
+        return coord;
     }
 
     protected void placeShips()
@@ -68,20 +125,23 @@ public class ConsoleGame {
 
 
                 // Get a coordinate for the ship.
-                Coordinate coord = null;
-                String coordinateSelectionRegex = getCoordinateRegex();
-
-                printPlayerGrid(player.getGrid());
-
-                System.out.print("\nEnter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
-                do {
-                    coord = getUserCoordinateSelection(coordinateSelectionRegex);
-
-                    if (coord == null)
-                    {
-                        System.out.print("Invalid coordinate. Please enter coordinate a-j0-9: ");
-                    }
-                } while (coord == null);
+                Coordinate coord = getCoordinate("Enter a coordinate for your " +
+                        ships.get(index).getName() +
+                        " (i.e. 'a0'): ", player.getGrid(), false);
+//                Coordinate coord = null;
+//                String coordinateSelectionRegex = getCoordinateRegex();
+//
+//                printPlayerGrid(player.getGrid());
+//
+//                System.out.print("\nEnter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
+//                do {
+//                    coord = getUserCoordinateSelection(coordinateSelectionRegex);
+//
+//                    if (coord == null)
+//                    {
+//                        System.out.print("Invalid coordinate. Please enter coordinate a-j0-9: ");
+//                    }
+//                } while (coord == null);
 
                 // Get an orientation for the ship
                 Character orientation = null;
@@ -103,6 +163,48 @@ public class ConsoleGame {
                             (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
                 }
             }
+
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+        }
+    }
+
+    private void printOpponentGrid(Cell[][] grid)
+    {
+        char row = 'a';
+
+        System.out.println();
+
+        // Print header
+        System.out.print("  ");
+        for (int i = 0; i < gridSize; i++)
+        {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+
+        // Print out rows
+        for (int i = 0; i < gridSize; i++)
+        {
+            System.out.print(row++ + " ");
+
+            for (int j = 0; j < gridSize; j++)
+            {
+                if (grid[i][j].getStatus() == Cell.CellStatus.hit)
+                {
+                    System.out.print("X ");
+                }
+                else if (grid[i][j].getStatus() == Cell.CellStatus.miss)
+                {
+                    System.out.print("O ");
+                }
+                else
+                {
+                    System.out.print("* ");
+                }
+
+            }
+
+            System.out.println();
         }
     }
 
