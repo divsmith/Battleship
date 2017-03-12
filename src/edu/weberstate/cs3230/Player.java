@@ -9,12 +9,17 @@ import java.util.List;
  */
 public class Player {
     private static String DEFAULT_NAME = "default";
-    private static Ship[] DEFAULT_SHIPS = {new Battleship(), new Carrier(), new Destroyer(), new Patrol(), new Submarine()};
 
     private Grid grid;
     protected List<Ship> ships = new ArrayList<Ship>();
     protected List<Ship> unplacedShips = new ArrayList<Ship>();
     private String name;
+
+    private static Ship[] getDefaultShips()
+    {
+        Ship[] ships =  {new Battleship(), new Carrier(), new Destroyer(), new Patrol(), new Submarine()};
+        return ships;
+    }
 
     public Player()
     {
@@ -23,7 +28,7 @@ public class Player {
 
     public Player(String name)
     {
-        this(name, new ArrayList<Ship>(Arrays.asList(DEFAULT_SHIPS)));
+        this(name, new ArrayList<Ship>(Arrays.asList(getDefaultShips())));
     }
 
     public Player(String name, List<Ship> unplacedShips)

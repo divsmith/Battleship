@@ -138,4 +138,13 @@ class PlayerTest {
 
         Assertions.assertTrue(player.lost());
     }
+
+    @Test
+    void players_do_not_have_shared_default_ship_objects()
+    {
+        Player player1 = new Player();
+        Player player2 = new Player();
+
+        Assertions.assertNotSame(player1.getUnplacedShips().get(0), player2.getUnplacedShips().get(0));
+    }
 }
