@@ -47,21 +47,37 @@ public class ConsoleGame {
         // will have swapped before this comparison occurs.
         while (!firingPlayer.lost())
         {
-            Coordinate coord = getCoordinate(firingPlayer.getName() +
-                    ", choose a coordinate to hit (i.e. 'a0'): ", receivingPlayer.getGrid(), true);
+            boolean valid = false;
 
-            Cell.HitResult result = receivingPlayer.hit(coord);
-
-            System.out.println();
-            printOpponentGrid(receivingPlayer.getGrid());
-
-            if (result == Cell.HitResult.hit)
+            while (!valid)
             {
-                System.out.println("\nHIT!");
-            }
-            else
-            {
-                System.out.println("\nMiss");
+                Coordinate coord = getCoordinate(firingPlayer.getName() +
+                        ", choose a coordinate to hit (i.e. 'a0'): ", receivingPlayer.getGrid(), true);
+
+                Cell.HitResult result = receivingPlayer.hit(coord);
+
+                System.out.println();
+                printOpponentGrid(receivingPlayer.getGrid());
+
+                if (result == Cell.HitResult.hit)
+                {
+                    System.out.println("\nHIT!");
+                    valid = true;
+                }
+                else if (result == Cell.HitResult.miss)
+                {
+                    System.out.println("\nMiss");
+                    valid = true;
+                }
+                else if (result == Cell.HitResult.sunk)
+                {
+                    System.out.println("\nSUNK!");
+                    valid = true;
+                }
+                else if (result == Cell.HitResult.alreadyMarked)
+                {
+                    System.out.println("\nThat coordinate has already been hit. Please pick a different one.");
+                }
             }
 
             System.out.println("----------------------");
@@ -70,6 +86,8 @@ public class ConsoleGame {
             firingPlayer = receivingPlayer;
             receivingPlayer = tempPlayer;
         }
+
+        System.out.println("\n" + receivingPlayer.getName() + " won the game!\n");
     }
 
     private Coordinate getCoordinate(String prompt, Cell[][] grid, boolean opponent)
