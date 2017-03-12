@@ -55,16 +55,14 @@ public class ConsoleGame {
                 String shipSelectionRegex = getShipSelectionRegex(ships);
                 int index = -1;
 
-                printPlayerGrid(player.getGrid());
-
-                System.out.println(player.getName() + ", select a ship to place.");
+                System.out.println("\n" + player.getName() + ", select a ship to place.\n");
                 do {
                     printShipOptions(ships);
                     index = getShipSelectionIndex(ships, shipSelectionRegex);
 
                     if (index < 0)
                     {
-                        System.out.println("Invalid ship. Please choose a valid selection below.");
+                        System.out.println("\nInvalid ship. Please choose a valid selection below.\n");
                     }
                 } while ( index < 0);
 
@@ -73,26 +71,28 @@ public class ConsoleGame {
                 Coordinate coord = null;
                 String coordinateSelectionRegex = getCoordinateRegex();
 
-                System.out.println("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
+                printPlayerGrid(player.getGrid());
+
+                System.out.print("\nEnter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
                 do {
                     coord = getUserCoordinateSelection(coordinateSelectionRegex);
 
                     if (coord == null)
                     {
-                        System.out.println("Invalid coordinate. Please enter coordinate a-j0-9: ");
+                        System.out.print("Invalid coordinate. Please enter coordinate a-j0-9: ");
                     }
                 } while (coord == null);
 
                 // Get an orientation for the ship
                 Character orientation = null;
 
-                System.out.println("Enter the ship orientation (either 'v' or 'h'): ");
+                System.out.print("Enter the ship orientation (either 'v' or 'h'): ");
                 do {
                     orientation = getOrientation();
 
                     if (orientation == null)
                     {
-                        System.out.println("Invalid orientation. Please enter 'v' or 'h': ");
+                        System.out.print("Invalid orientation. Please enter 'v' or 'h': ");
                     }
                 } while (orientation == null);
 
@@ -108,6 +108,8 @@ public class ConsoleGame {
 
     private void printPlayerGrid(Cell[][] grid) {
         char row = 'a';
+
+        System.out.println();
 
         // Print header
         System.out.print("  ");
@@ -154,6 +156,8 @@ public class ConsoleGame {
 
             System.out.println("(" + shipLabel + ") - " + name);
         }
+
+        System.out.println();
     }
 
     protected Coordinate getUserCoordinateSelection(String regex)

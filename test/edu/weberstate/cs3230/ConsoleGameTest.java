@@ -51,7 +51,7 @@ class ConsoleGameTest extends ConsoleGame{
                 "(c) - Carrier\n" +
                 "(d) - Destroyer\n" +
                 "(p) - Patrol\n" +
-                "(s) - Submarine\n", output.toString());
+                "(s) - Submarine\n\n", output.toString());
 
         System.setOut(System.out);
     }
