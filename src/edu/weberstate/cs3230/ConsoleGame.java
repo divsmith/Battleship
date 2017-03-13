@@ -8,7 +8,7 @@ import java.util.function.Function;
 /**
  * Created by parker on 2/6/17.
  */
-public class ConsoleGame {
+public class ConsoleGame implements IGame {
     private static int DEFAULT_SIZE = 10;
 
     Scanner scanner;
