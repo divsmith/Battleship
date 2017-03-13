@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by parker on 2/13/17.
  */
-public class Grid {
+public class Grid implements IGrid {
 
     private int size;
     private Cell[][] grid;
