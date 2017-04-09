@@ -99,6 +99,7 @@ public class Player {
 
         if (placed)
         {
+            Logger.getLogger().info(this.getName() + " placed " + unplacedShips.get(index).getName() + " at " + placement.getRowChar() + placement.getCol() + " " + placement.getOrientation());
             ships.add(unplacedShips.get(index));
             unplacedShips.remove(index);
         }
