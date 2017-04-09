@@ -63,20 +63,24 @@ public class ConsoleGame implements IGame {
                 {
                     System.out.println("\nHIT!");
                     valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and HIT");
                 }
                 else if (result == Cell.HitResult.miss)
                 {
                     System.out.println("\nMiss");
                     valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and MISSED");
                 }
                 else if (result == Cell.HitResult.sunk)
                 {
                     System.out.println("\nSUNK!");
                     valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and SUNK");
                 }
                 else if (result == Cell.HitResult.alreadyMarked)
                 {
                     System.out.println("\nThat coordinate has already been hit. Please pick a different one.");
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " which was already fired at");
                 }
             }
 
@@ -88,6 +92,7 @@ public class ConsoleGame implements IGame {
         }
 
         System.out.println("\n" + receivingPlayer.getName() + " won the game!\n");
+        Logger.getLogger().info(receivingPlayer.getName() + " won the game");
     }
 
     private Coordinate getCoordinate(String prompt, Cell[][] grid, boolean opponent)
@@ -168,8 +173,6 @@ public class ConsoleGame implements IGame {
 
                     Logger.getLogger().warning("Invalid ship placement: " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
                 }
-
-                Logger.getLogger().info(player.getName() + " placed " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
             }
 
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
