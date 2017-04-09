@@ -165,7 +165,11 @@ public class ConsoleGame implements IGame {
                 {
                     System.out.println(ships.get(index).getName() + " cannot be placed " +
                             (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
+
+                    Logger.getLogger().warning("Invalid ship placement: " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
                 }
+
+                Logger.getLogger().info(player.getName() + " placed " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
             }
 
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
