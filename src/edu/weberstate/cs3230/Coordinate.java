@@ -14,8 +14,6 @@ public class Coordinate {
         rowChar = row;
         this.row = row - 'a';
         this.col = col;
-
-        Logger.getLogger().info("Coordinate " + row + col + " created.");
     }
 
     public Coordinate(int row, int col)
