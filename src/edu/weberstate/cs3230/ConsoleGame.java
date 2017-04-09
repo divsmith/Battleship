@@ -146,20 +146,6 @@ public class ConsoleGame implements IGame {
                 Coordinate coord = getCoordinate("Enter a coordinate for your " +
                         ships.get(index).getName() +
                         " (i.e. 'a0'): ", player.getGrid(), false);
-//                Coordinate coord = null;
-//                String coordinateSelectionRegex = getCoordinateRegex();
-//
-//                printPlayerGrid(player.getGrid());
-//
-//                System.out.print("\nEnter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
-//                do {
-//                    coord = getUserCoordinateSelection(coordinateSelectionRegex);
-//
-//                    if (coord == null)
-//                    {
-//                        System.out.print("Invalid coordinate. Please enter coordinate a-j0-9: ");
-//                    }
-//                } while (coord == null);
 
                 // Get an orientation for the ship
                 Character orientation = null;
