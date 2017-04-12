@@ -5,9 +5,9 @@ import edu.weberstate.cs3230.Ship.ShipState;
 /**
  * Created by parker on 2/6/17.
  */
-public class Cell {
+public class Cell<T extends IShip> {
     private boolean hasShip;
-    private Ship ship;
+    private T ship;
     private CellStatus status;
 
     public enum CellStatus
@@ -42,13 +42,13 @@ public class Cell {
         return this.hasShip;
     }
 
-    public void setShip(Ship ship)
+    public void setShip(T ship)
     {
         this.ship = ship;
         this.hasShip = true;
     }
 
-    public Ship getShip()
+    public T getShip()
     {
         return this.ship;
     }

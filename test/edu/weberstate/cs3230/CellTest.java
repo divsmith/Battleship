@@ -10,7 +10,7 @@ import static edu.weberstate.cs3230.Cell.*;
  * Created by parker on 2/12/17.
  */
 class CellTest {
-    private Cell cell;
+    private Cell<Ship> cell;
     private Ship ship;
 
     @BeforeEach

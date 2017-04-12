@@ -6,11 +6,11 @@ import java.util.List;
 /**
  * Created by parker on 2/13/17.
  */
-public class Grid implements IGrid {
+public class Grid<T extends IShip> implements IGrid<T> {
 
     private int size;
-    private Cell[][] grid;
-    private List<Ship> shipList = new ArrayList<Ship>();
+    private Cell<T>[][] grid;
+    private List<T> shipList = new ArrayList<T>();
     private List<Placement> placementList = new ArrayList<Placement>();
 
     public Grid()
@@ -39,7 +39,7 @@ public class Grid implements IGrid {
 
         for (int x = 0; x < shipList.size(); x++)
         {
-            Ship ship = shipList.get(x).copy();
+            T ship = (T) shipList.get(x).copy();
             Placement placement = placementList.get(x);
             placeShip(ship, placement, cells, false);
         }
@@ -80,7 +80,7 @@ public class Grid implements IGrid {
         return size;
     }
 
-    public boolean placeShip(Ship ship, Placement placement, Cell[][] grid, boolean addToLists)
+    public boolean placeShip(T ship, Placement placement, Cell[][] grid, boolean addToLists)
     {
         int row = placement.getRow();
         int col = placement.getCol();
@@ -120,7 +120,7 @@ public class Grid implements IGrid {
         return false;
     }
 
-    public boolean placeShip(Ship ship, Placement placement)
+    public boolean placeShip(T ship, Placement placement)
     {
         return this.placeShip(ship, placement, this.grid, true);
     }
@@ -167,7 +167,7 @@ public class Grid implements IGrid {
         return true;
     }
 
-    public Ship getShip(Coordinate coord)
+    public T getShip(Coordinate coord)
     {
         int row = coord.getRow();
         int col = coord.getCol();
