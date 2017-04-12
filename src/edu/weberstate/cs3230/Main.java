@@ -1,7 +1,7 @@
 package edu.weberstate.cs3230;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import edu.weberstate.cs3230.console.ConsoleGame;
+import edu.weberstate.cs3230.engine.IGame;
 
 public class Main {
 

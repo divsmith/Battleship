@@ -18,7 +18,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="Engine" />
-    <orderEntry type="module" module-name="Console" />
   </component>
 </module>
