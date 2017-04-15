@@ -27,12 +27,35 @@ public class Main extends Application {
         window.setResizable(false);
 
         BorderPane pane = new BorderPane();
-        GridPane left = new GridPane();
-        GridPane right = new GridPane();
+        GridPane leftPlayerGrid = new GridPane();
+        GridPane rightPlayerGrid = new GridPane();
 
         List<GridPane> grids = new ArrayList<GridPane>();
-        grids.add(left);
-        grids.add(right);
+        grids.add(leftPlayerGrid);
+        grids.add(rightPlayerGrid);
+
+        BorderPane leftBorder = new BorderPane();
+        GridPane top = new GridPane();
+        GridPane left = new GridPane();
+
+        for (int i = 0; i < 10; i++)
+        {
+            left.addRow(i);
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setPercentHeight(10);
+
+            left.add(new Label(Integer.toString(i)), i, 0);
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            top.addColumn(i);
+        }
+
+        top.setPrefWidth(250);
+
+        leftBorder.setTop(top);
+        leftBorder.setCenter(leftPlayerGrid);
 
         for (GridPane grid : grids)
         {
@@ -63,10 +86,11 @@ public class Main extends Application {
             }
 
             grid.setPrefWidth(250);
+            grid.setPrefHeight(250);
         }
 
 
-        pane.setLeft(grids.get(0));
+        pane.setLeft(leftBorder);
         pane.setRight(grids.get(1));
 
         Scene scene = new Scene(pane, 800, 300);
