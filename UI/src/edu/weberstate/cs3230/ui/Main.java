@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main extends Application {
 
@@ -34,38 +35,16 @@ public class Main extends Application {
         grids.add(leftPlayerGrid);
         grids.add(rightPlayerGrid);
 
-        BorderPane leftBorder = new BorderPane();
-        GridPane top = new GridPane();
-        GridPane left = new GridPane();
-
-        for (int i = 0; i < 10; i++)
-        {
-            left.addRow(i);
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setPercentHeight(10);
-
-            left.add(new Label(Integer.toString(i)), i, 0);
-        }
-
-        for (int i = 0; i < 10; i++)
-        {
-            top.addColumn(i);
-        }
-
-        top.setPrefWidth(250);
-
-        leftBorder.setTop(top);
-        leftBorder.setCenter(leftPlayerGrid);
 
         for (GridPane grid : grids)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 11; i++)
             {
                 grid.addRow(i);
                 grid.addColumn(i);
 
                 ColumnConstraints columnConstraints = new ColumnConstraints();
-                columnConstraints.setPercentWidth(10);
+                columnConstraints.setPercentWidth(12);
 
                 RowConstraints rowConstraints = new RowConstraints();
                 rowConstraints.setPercentHeight(10);
@@ -74,31 +53,40 @@ public class Main extends Application {
                 grid.getRowConstraints().add(rowConstraints);
             }
 
-            for (int col = 0; col < 10; col++)
+            for (int col = 0; col < 11; col++)
             {
-                for (int row = 0; row < 10; row++)
+                for (int row = 0; row < 11; row++)
                 {
                     StackPane cellPane = new StackPane();
                     cellPane.setBorder(new Border(new BorderStroke(Color.DARKGREY, BorderStrokeStyle.SOLID, new CornerRadii(2.0), BorderWidths.DEFAULT)));
+
+                    if (col == 0 && row > 0)
+                    {
+                        cellPane.getChildren().add(new Label(Integer.toString(row - 1)));
+                    }
+
+                    if (row == 0 && col > 0)
+                    {
+                        cellPane.getChildren().add(new Label(Character.toString((char) (col - 1 + 'A'))));
+                    }
 
                     grid.add(cellPane, col, row);
                 }
             }
 
-            grid.setPrefWidth(250);
+            grid.setPrefWidth(400);
             grid.setPrefHeight(250);
         }
 
-
-        pane.setLeft(leftBorder);
+        pane.setLeft(grids.get(0));
         pane.setRight(grids.get(1));
 
-        Scene scene = new Scene(pane, 800, 300);
+        Scene scene = new Scene(pane, 1200, 500);
 
         window.setScene(scene);
         window.show();
 
-        StackPane update = (StackPane) grids.get(0).getChildren().get(2);
+        StackPane update = (StackPane) grids.get(0).getChildren().get(15);
 
         update.getChildren().add(new Label("1"));
     }
