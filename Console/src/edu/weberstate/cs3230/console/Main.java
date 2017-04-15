@@ -1,4 +1,4 @@
-package edu.weberstate.cs3230;
+package edu.weberstate.cs3230.console;
 
 import edu.weberstate.cs3230.console.ConsoleGame;
 import edu.weberstate.cs3230.engine.IGame;
