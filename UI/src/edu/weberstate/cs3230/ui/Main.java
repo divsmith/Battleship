@@ -1,6 +1,6 @@
 package edu.weberstate.cs3230.ui;
 
-import edu.weberstate.cs3230.engine.Player;
+import edu.weberstate.cs3230.engine.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -149,6 +149,132 @@ public class Main extends Application {
         getPlayerNames();
     }
 
+    protected void placeShips()
+    {
+        Player player = players.get(0);
+        write("\n" + player.getName() + ", select a ship to place.\n");
+
+        setHandlers(event -> {
+            List<Ship> ships = player.getUnplacedShips();
+            printShipOptions(ships);
+
+            // Select the ship to place.
+            String shipSelectionRegex = getShipSelectionRegex(ships);
+            int index = -1;
+            index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+
+        });
+
+//        for (Player player : players)
+//        {
+//            while(player.hasShipsToPlace())
+//            {
+//                List<Ship> ships = player.getUnplacedShips();
+//
+//                // Select the ship to place.
+//                String shipSelectionRegex = getShipSelectionRegex(ships);
+//                int index = -1;
+//
+//                write("\n" + player.getName() + ", select a ship to place.\n");
+//                do {
+//                    printShipOptions(ships);
+//                    index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+//
+//                    if (index < 0)
+//                    {
+//                        write("\nInvalid ship. Please choose a valid selection below.\n");
+//                    }
+//                } while ( index < 0);
+//
+//
+//                // Get a coordinate for the ship.
+//                Coordinate coord = getCoordinate("Enter a coordinate for your " +
+//                        ships.get(index).getName() +
+//                        " (i.e. 'a0'): ", player.getGrid(), false);
+//
+//                // Get an orientation for the ship
+//                Character orientation = null;
+//
+//                System.out.print("Enter the ship orientation (either 'v' or 'h'): ");
+//                do {
+//                    orientation = getOrientation();
+//
+//                    if (orientation == null)
+//                    {
+//                        System.out.print("Invalid orientation. Please enter 'v' or 'h': ");
+//                    }
+//                } while (orientation == null);
+//
+//                // Place ship
+//                if (!player.placeShip(index, new Placement(coord, orientation)))
+//                {
+//                    write(ships.get(index).getName() + " cannot be placed " +
+//                            (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
+//
+//                    Logger.getLogger().warning("Invalid ship placement: " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
+//                }
+//            }
+//
+//            write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+//        }
+    }
+
+    protected int getShipSelectionIndex(String string, List<Ship> ships, String regex)
+    {
+        if (string.matches(regex))
+        {
+            int index = 0;
+            Character input = Character.toLowerCase(string.charAt(0));
+
+            for (Ship ship : ships)
+            {
+                if (Character.toLowerCase(ship.getName().charAt(0)) == input)
+                {
+                    return index;
+                }
+
+                index++;
+            }
+        }
+
+        return -1;
+    }
+
+    protected void printShipOptions(List<Ship> ships)
+    {
+        for (Ship ship : ships)
+        {
+            String name = ship.getName();
+
+            Character shipLabel = Character.toLowerCase(name.charAt(0));
+
+            write("(" + shipLabel + ") - " + name);
+        }
+
+        write();
+    }
+
+    protected String getShipSelectionRegex(List<Ship> ships)
+    {
+        String regex = "(";
+
+        for (Ship ship : ships)
+        {
+            String name = ship.getName();
+
+            Character shipLabel = Character.toLowerCase(name.charAt(0));
+
+            // Add the lowercase and uppercase first letter of the ship name to the regex string
+            regex = regex.concat(shipLabel + "|" + Character.toUpperCase(shipLabel) + "|");
+        }
+
+        // Remove last | from regex string.
+        regex = regex.substring(0, regex.length() - 1);
+        regex = regex.concat(")");
+
+        return regex;
+    }
+
     private void getPlayerNames()
     {
         write("Player 1 name: ");
@@ -160,8 +286,14 @@ public class Main extends Application {
             setHandlers(e -> {
                 players.get(1).setName(input.getText());
                 clear();
+                placeShips();
             });
         });
+    }
+
+    private void write()
+    {
+        write("");
     }
 
     private void write(String message)
