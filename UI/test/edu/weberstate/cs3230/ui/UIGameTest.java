@@ -21,7 +21,7 @@ class UIGameTest {
         UIGame test = new UIGame();
 
         String[] args = new String[1];
-        args[0] = "UI/test/resources/ConsoleInput.txt";
+        args[0] = "UI/test/resources/UIInput.txt";
         test.main(args);
     }
 }
