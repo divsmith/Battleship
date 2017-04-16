@@ -109,9 +109,15 @@ public class UIGame extends Application {
         VBox inputArea = new VBox();
 
         output = new TextArea();
-        output.setEditable(false);
-        output.setMouseTransparent(true);
-        output.setFocusTraversable(false);
+
+        if (path == null)
+        {
+            // Set the text area to be unaccessible
+            // unless a test is running.
+            output.setEditable(false);
+            output.setMouseTransparent(true);
+            output.setFocusTraversable(false);
+        }
 
         inputArea.setSpacing(10);
         inputArea.setAlignment(Pos.CENTER);
