@@ -299,10 +299,6 @@ public class UIGame extends Application {
         });
     }
 
-    EventHandler<ActionEvent> playerFireEvent = event -> {
-
-    };
-
     protected void playerFire(Player firingPlayer)
     {
         write(firingPlayer.getName() + ", choose a coordinate to hit (i.e. 'a0'): ");
@@ -357,6 +353,7 @@ public class UIGame extends Application {
                 else if (valid && receivingPlayer.lost())
                 {
                     write(firingPlayer.getName() + " won the game!");
+                    setHandlers(null);
                 }
             }
 
