@@ -3,10 +3,12 @@ package edu.weberstate.cs3230.ui;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -19,6 +21,9 @@ import java.util.Scanner;
 public class Main extends Application {
 
     Stage window;
+    TextField input;
+    TextArea output;
+    Button enterButton;
 
     public static void main(String[] args) {
         launch(args);
@@ -84,44 +89,51 @@ public class Main extends Application {
         pane.setLeft(grids.get(0));
         pane.setRight(grids.get(1));
 
-        GridPane inputGrid = new GridPane();
-        inputGrid.setPadding(new Insets(10, 10, 10, 10));
-        inputGrid.setVgap(8);
-        inputGrid.setHgap(10);
+        VBox inputArea = new VBox();
 
-        Label nameLabel = new Label("Username:");
-        GridPane.setConstraints(nameLabel, 0, 0);
+        output = new TextArea();
+        output.setEditable(false);
+        output.setMouseTransparent(true);
+        output.setFocusTraversable(false);
 
-        TextField nameInput = new TextField("Test");
-        GridPane.setConstraints(nameInput, 1, 0);
+        inputArea.setSpacing(10);
+        inputArea.setAlignment(Pos.CENTER);
 
-
-        Label passLabel = new Label("Password:");
-        GridPane.setConstraints(passLabel, 0, 1);
-
-        TextField input = new TextField();
+        input = new TextField();
         input.setPromptText("Input");
-        GridPane.setConstraints(input, 1, 1);
 
-        Button loginButton = new Button("Log In");
-        GridPane.setConstraints(loginButton, 1, 2);
+        enterButton = new Button("Enter");
+        enterButton.prefWidth(50);
 
-        loginButton.setOnAction(event -> {
-            System.out.println(nameInput.getText());
-            System.out.println(input.getText());
+        enterButton.setOnAction(event -> {
+            handleInput();
         });
 
-        inputGrid.getChildren().addAll(nameLabel, nameInput, passLabel, input, loginButton);
+        input.setOnAction(event -> {
+            handleInput();
+        });
 
-        pane.setCenter(inputGrid);
+        inputArea.getChildren().addAll(output, input, enterButton);
+
+        pane.setCenter(inputArea);
 
         Scene scene = new Scene(pane, 1200, 500);
 
         window.setScene(scene);
         window.show();
 
-        StackPane update = (StackPane) grids.get(0).getChildren().get(15);
+//        StackPane update = (StackPane) grids.get(0).getChildren().get(15);
+//
+//        update.getChildren().add(new Label("1"));
 
-        update.getChildren().add(new Label("1"));
+//        input.setText("testing\n\n\n");
+//        enterButton.fire();
+    }
+
+    private void handleInput()
+    {
+        output.appendText(input.getText() + "\n");
+//        output.appendText("\n");
+//        input.clear();
     }
 }
