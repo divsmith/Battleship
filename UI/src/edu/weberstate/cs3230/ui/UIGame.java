@@ -211,6 +211,22 @@ public class UIGame extends Application {
         }
     }
 
+    protected void clearGrid(Player player)
+    {
+        GridPane displayGrid = player.equals(player1) ? leftPlayerGrid : rightPlayerGrid;
+
+        Cell[][] grid = player.getGrid();
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                StackPane pane = (StackPane) displayGrid.getChildren().get(((j + 1) * 11) + 1 + i);
+                pane.getChildren().clear();
+            }
+        }
+    }
+
     protected void playerSelectOrientation(Player player, Coordinate coord, int index)
     {
         write("Enter the ship orientation (either 'v' or 'h'): ");
@@ -241,10 +257,12 @@ public class UIGame extends Application {
                 }
                 else if (player.equals(player1))
                 {
+                    clearGrid(player1);
                     playerSelectShip(player2);
                 }
 
                 clear();
+                clearGrid(player2);
                 startGame();
             }
 
