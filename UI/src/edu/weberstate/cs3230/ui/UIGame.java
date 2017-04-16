@@ -211,6 +211,32 @@ public class UIGame extends Application {
         }
     }
 
+    protected void drawGridForOpponent(Player player)
+    {
+        GridPane displayGrid = player.equals(player1) ? leftPlayerGrid : rightPlayerGrid;
+
+        Cell[][] grid = player.getGrid();
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (grid[i][j].getStatus() == Cell.CellStatus.hit)
+                {
+                    StackPane pane = (StackPane) displayGrid.getChildren().get(((j + 1) * 11) + 1 + i);
+                    pane.getChildren().clear();
+                    pane.getChildren().add(new Label("X"));
+                }
+                else if (grid[i][j].getStatus() == Cell.CellStatus.miss)
+                {
+                    StackPane pane = (StackPane) displayGrid.getChildren().get(((j + 1) * 11) + 1 + i);
+                    pane.getChildren().clear();
+                    pane.getChildren().add(new Label("O"));
+                }
+            }
+        }
+    }
+
     protected void clearGrid(Player player)
     {
         GridPane displayGrid = player.equals(player1) ? leftPlayerGrid : rightPlayerGrid;
@@ -260,19 +286,82 @@ public class UIGame extends Application {
                     clearGrid(player1);
                     playerSelectShip(player2);
                 }
+                else
+                {
+                    clearGrid(player2);
+                    playerFire(player1);
+                }
 
                 clear();
-                clearGrid(player2);
-                startGame();
             }
 
             clear();
         });
     }
 
-    protected void startGame()
-    {
+    EventHandler<ActionEvent> playerFireEvent = event -> {
 
+    };
+
+    protected void playerFire(Player firingPlayer)
+    {
+        write(firingPlayer.getName() + ", choose a coordinate to hit (i.e. 'a0'): ");
+        setHandlers(event -> {
+            String coordinateSelectionRegex = getCoordinateRegex();
+            Coordinate coord = null;
+            coord = getUserCoordinateSelection(input.getText(), coordinateSelectionRegex);
+
+            if (coord == null)
+            {
+                write("\nInvalid coordinate");
+                write(firingPlayer.getName() + ", choose a coordinate to hit (i.e. 'a0'): ");
+            }
+            else
+            {
+                Player receivingPlayer = firingPlayer.equals(player1) ? player2 : player1;
+                Cell.HitResult result = receivingPlayer.hit(coord);
+
+                Boolean valid = false;
+
+                drawGridForOpponent(receivingPlayer);
+
+                if (result == Cell.HitResult.hit)
+                {
+                    write("\nHIT!");
+                    valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and HIT");
+                }
+                else if (result == Cell.HitResult.miss)
+                {
+                    write("\nMiss");
+                    valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and MISSED");
+                }
+                else if (result == Cell.HitResult.sunk)
+                {
+                    write("\nSUNK!");
+                    valid = true;
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " and SUNK");
+                }
+                else if (result == Cell.HitResult.alreadyMarked)
+                {
+                    write("\nThat coordinate has already been hit. Please pick a different one.");
+                    Logger.getLogger().info(firingPlayer.getName() + " fired at " + coord.getRowChar() + coord.getCol() + " which was already fired at");
+                }
+
+                if (valid && !receivingPlayer.lost())
+                {
+                    clear();
+                    playerFire(receivingPlayer);
+                }
+                else if (valid && receivingPlayer.lost())
+                {
+                    write(firingPlayer.getName() + " won the game!");
+                }
+            }
+
+            clear();
+        });
     }
 
     protected void playerSelectCoordinate(Player player, int index)
