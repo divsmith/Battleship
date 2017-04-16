@@ -14,6 +14,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class UIGame extends Application {
     TextField input;
     TextArea output;
     Button enterButton;
+    private static String path = null;
 
     List<Player> players = new ArrayList<Player>();
 
@@ -31,6 +35,11 @@ public class UIGame extends Application {
     };
 
     public static void main(String[] args) {
+        if (args.length > 0)
+        {
+            path = args[0];
+        }
+
         launch(args);
     }
 
@@ -143,6 +152,31 @@ public class UIGame extends Application {
         players.add(new Player());
 
         getPlayerNames();
+
+        if (path != null)
+        {
+            startFileInput();
+        }
+    }
+
+    private void startFileInput()
+    {
+        try {
+            FileReader fileReader = new FileReader(new File(path));
+            BufferedReader buffer = new BufferedReader(fileReader);
+            String line;
+
+            while ((line = buffer.readLine()) != null)
+            {
+                input.setText(line);
+                enterButton.fire();
+            }
+
+            fileReader.close();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     protected void placeShips()
@@ -282,22 +316,22 @@ public class UIGame extends Application {
             setHandlers(e -> {
                 players.get(1).setName(input.getText());
                 clear();
-                placeShips();
+                //placeShips();
             });
         });
     }
 
-    private void write()
+    protected void write()
     {
         write("");
     }
 
-    private void write(String message)
+    protected void write(String message)
     {
         output.appendText(message + " ");
     }
 
-    private void clear()
+    protected void clear()
     {
         output.appendText(input.getText() + "\n");
         input.clear();
