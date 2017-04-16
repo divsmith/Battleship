@@ -141,13 +141,6 @@ public class UIGame extends Application {
         window.setScene(scene);
         window.show();
 
-//        StackPane update = (StackPane) grids.get(0).getChildren().get(15);
-//
-//        update.getChildren().add(new Label("1"));
-
-//        input.setText("testing\n\n\n");
-//        enterButton.fire();
-
         play();
     }
 
@@ -416,59 +409,6 @@ public class UIGame extends Application {
 
             clear();
         });
-
-//        for (Player player : players)
-//        {
-//            while(player.hasShipsToPlace())
-//            {
-//                List<Ship> ships = player.getUnplacedShips();
-//
-//                // Select the ship to place.
-//                String shipSelectionRegex = getShipSelectionRegex(ships);
-//                int index = -1;
-//
-//                write("\n" + player.getName() + ", select a ship to place.\n");
-//                do {
-//                    printShipOptions(ships);
-//                    index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
-//
-//                    if (index < 0)
-//                    {
-//                        write("\nInvalid ship. Please choose a valid selection below.\n");
-//                    }
-//                } while ( index < 0);
-//
-//
-//                // Get a coordinate for the ship.
-//                Coordinate coord = getCoordinate("Enter a coordinate for your " +
-//                        ships.get(index).getName() +
-//                        " (i.e. 'a0'): ", player.getGrid(), false);
-//
-//                // Get an orientation for the ship
-//                Character orientation = null;
-//
-//                System.out.print("Enter the ship orientation (either 'v' or 'h'): ");
-//                do {
-//                    orientation = getOrientation();
-//
-//                    if (orientation == null)
-//                    {
-//                        System.out.print("Invalid orientation. Please enter 'v' or 'h': ");
-//                    }
-//                } while (orientation == null);
-//
-//                // Place ship
-//                if (!player.placeShip(index, new Placement(coord, orientation)))
-//                {
-//                    write(ships.get(index).getName() + " cannot be placed " +
-//                            (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
-//
-//                    Logger.getLogger().warning("Invalid ship placement: " + ships.get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
-//                }
-//            }
-//
-//            write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-//        }
     }
 
     protected Character getOrientation(String string)
@@ -583,7 +523,6 @@ public class UIGame extends Application {
 
     protected void clear()
     {
-        //output.appendText(input.getText() + "\n");
         input.clear();
     }
 }

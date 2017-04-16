@@ -16,8 +16,6 @@ class UIGameTest {
     @Test
     void  UIGameplay_Test()
     {
-        //this.main(null);
-
         UIGame test = new UIGame();
 
         String[] args = new String[1];
