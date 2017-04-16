@@ -182,12 +182,6 @@ public class UIGame extends Application {
         }
     }
 
-    EventHandler<ActionEvent> player1CoordinatePrompt = event -> {
-        List<Ship> ships = player1.getUnplacedShips();
-
-        clear();
-    };
-
     protected void player1SelectOrientation()
     {
 
