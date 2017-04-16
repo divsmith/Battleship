@@ -3,7 +3,6 @@ package edu.weberstate.cs3230.ui;
 import edu.weberstate.cs3230.engine.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,7 +20,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UIGame extends Application {
+public class UIGame extends Application implements IGame {
 
     Stage window;
     TextField input;
@@ -141,7 +140,7 @@ public class UIGame extends Application {
         window.setScene(scene);
         window.show();
 
-        play();
+        startGame();
     }
 
     private void setHandlers(EventHandler<ActionEvent> handler)
@@ -150,7 +149,7 @@ public class UIGame extends Application {
         input.setOnAction(handler);
     }
 
-    public void play()
+    public void startGame()
     {
         player1 = new Player();
         player2 = new Player();
@@ -524,5 +523,15 @@ public class UIGame extends Application {
     protected void clear()
     {
         input.clear();
+    }
+
+    @Override
+    public void play() {
+        play(new String[0]);
+    }
+
+    public void play(String[] args)
+    {
+        this.main(args);
     }
 }

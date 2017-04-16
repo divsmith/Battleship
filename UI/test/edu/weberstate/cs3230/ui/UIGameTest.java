@@ -1,5 +1,6 @@
 package edu.weberstate.cs3230.ui;
 
+import edu.weberstate.cs3230.engine.IGame;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;
@@ -16,10 +17,11 @@ class UIGameTest {
     @Test
     void  UIGameplay_Test()
     {
-        UIGame test = new UIGame();
+        UIGame game = new UIGame();
 
         String[] args = new String[1];
         args[0] = "UI/test/resources/UIInput.txt";
-        test.main(args);
+
+        game.play(args);
     }
 }
