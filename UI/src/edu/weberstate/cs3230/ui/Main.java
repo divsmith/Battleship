@@ -1,6 +1,8 @@
 package edu.weberstate.cs3230.ui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,6 +26,10 @@ public class Main extends Application {
     TextField input;
     TextArea output;
     Button enterButton;
+
+    EventHandler<ActionEvent> clear = event -> {
+        input.clear();
+    };
 
     public static void main(String[] args) {
         launch(args);
@@ -105,13 +111,7 @@ public class Main extends Application {
         enterButton = new Button("Enter");
         enterButton.prefWidth(50);
 
-        enterButton.setOnAction(event -> {
-            handleInput();
-        });
-
-        input.setOnAction(event -> {
-            handleInput();
-        });
+        setHandlers(clear);
 
         inputArea.getChildren().addAll(output, input, enterButton);
 
@@ -128,12 +128,22 @@ public class Main extends Application {
 
 //        input.setText("testing\n\n\n");
 //        enterButton.fire();
+
+        run();
     }
 
-    private void handleInput()
+    private void setHandlers(EventHandler<ActionEvent> handler)
     {
-        output.appendText(input.getText() + "\n");
-//        output.appendText("\n");
-//        input.clear();
+        enterButton.setOnAction(handler);
+        input.setOnAction(handler);
+    }
+
+    private void run()
+    {
+        EventHandler<ActionEvent> print = event -> {
+            System.out.println(input.getText() + "\n");
+        };
+
+        setHandlers(print);
     }
 }
