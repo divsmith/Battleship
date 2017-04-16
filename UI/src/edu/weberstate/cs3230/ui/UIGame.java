@@ -184,64 +184,70 @@ public class UIGame extends Application {
 
     EventHandler<ActionEvent> player1CoordinatePrompt = event -> {
         List<Ship> ships = player1.getUnplacedShips();
+
         clear();
     };
 
-    EventHandler<ActionEvent> player1InvalidShip = event -> {
+    protected void player1SelectOrientation()
+    {
+
+    }
+
+    protected void player1SelectCoordinate()
+    {
         List<Ship> ships = player1.getUnplacedShips();
+        write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
 
-        // Select the ship to place.
-        String shipSelectionRegex = getShipSelectionRegex(ships);
-        index = -1;
-        index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+        setHandlers(event -> {
+            List<Ship> ships2 = player1.getUnplacedShips();
 
-        if (index < 0)
-        {
-            write("\nInvalid ship. Please choose a valid selection below.\n");
+            String coordinateSelectionRegex = getCoordinateRegex();
 
-            printShipOptions(ships);
-        }
-        else
-        {
-            write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
-            setHandlers(player1CoordinatePrompt);
-        }
+            Coordinate coord = null;
+            coord = getUserCoordinateSelection(input.getText(), coordinateSelectionRegex);
 
-        clear();
-    };
+            if (coord == null)
+            {
+                write("\nInvalid coordinate");
+                write("Enter a coordinate for your " + ships2.get(index).getName() + " (i.e. 'a0'): ");
+            }
+            else
+            {
+                player1SelectOrientation();
+            }
 
-    EventHandler<ActionEvent> player1ShipPrompt = event -> {
-        List<Ship> ships = player1.getUnplacedShips();
+            clear();
+        });
+    }
 
-        // Select the ship to place.
-        String shipSelectionRegex = getShipSelectionRegex(ships);
-        index = -1;
-        index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
-
-        if (index < 0)
-        {
-            write("\nInvalid ship. Please choose a valid selection below.\n");
-
-            printShipOptions(ships);
-            setHandlers(player1InvalidShip);
-        }
-        else
-        {
-            write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
-            setHandlers(player1CoordinatePrompt);
-        }
-
-        clear();
-    };
-
-    protected void placeShipsPlayer1()
+    protected void player1SelectShip()
     {
         write("\n" + player1.getName() + ", select a ship to place.\n");
 
         List<Ship> initialShips = player1.getUnplacedShips();
         printShipOptions(initialShips);
 
-        setHandlers(player1ShipPrompt);
+        setHandlers(event -> {
+            List<Ship> ships = player1.getUnplacedShips();
+
+            // Select the ship to place.
+            String shipSelectionRegex = getShipSelectionRegex(ships);
+            index = -1;
+            index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+
+            if (index < 0)
+            {
+                write("\nInvalid ship. Please choose a valid selection below.\n");
+
+                printShipOptions(ships);
+            }
+            else
+            {
+                player1SelectCoordinate();
+            }
+
+            clear();
+        });
 
 //        for (Player player : players)
 //        {
@@ -297,6 +303,12 @@ public class UIGame extends Application {
 //        }
     }
 
+    protected String getCoordinateRegex()
+    {
+        // This should be dynamically generated based on grid size;
+        return "([a-j][0-9])";
+    }
+
     protected int getShipSelectionIndex(String string, List<Ship> ships, String regex)
     {
         if (string.matches(regex))
@@ -316,6 +328,18 @@ public class UIGame extends Application {
         }
 
         return -1;
+    }
+
+    protected Coordinate getUserCoordinateSelection(String string, String regex)
+    {
+        if (string.matches(regex))
+        {
+            String input = string;
+
+            return new Coordinate(input.charAt(0), Character.getNumericValue(input.charAt(1)));
+        }
+
+        return null;
     }
 
     protected void printShipOptions(List<Ship> ships)
@@ -364,7 +388,7 @@ public class UIGame extends Application {
             setHandlers(e -> {
                 player2.setName(input.getText());
                 clear();
-                placeShipsPlayer1();
+                player1SelectShip();
             });
         });
     }
