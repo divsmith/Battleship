@@ -2,9 +2,12 @@ package edu.weberstate.cs3230.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -80,6 +83,37 @@ public class Main extends Application {
 
         pane.setLeft(grids.get(0));
         pane.setRight(grids.get(1));
+
+        GridPane inputGrid = new GridPane();
+        inputGrid.setPadding(new Insets(10, 10, 10, 10));
+        inputGrid.setVgap(8);
+        inputGrid.setHgap(10);
+
+        Label nameLabel = new Label("Username:");
+        GridPane.setConstraints(nameLabel, 0, 0);
+
+        TextField nameInput = new TextField("Test");
+        GridPane.setConstraints(nameInput, 1, 0);
+
+
+        Label passLabel = new Label("Password:");
+        GridPane.setConstraints(passLabel, 0, 1);
+
+        TextField input = new TextField();
+        input.setPromptText("Input");
+        GridPane.setConstraints(input, 1, 1);
+
+        Button loginButton = new Button("Log In");
+        GridPane.setConstraints(loginButton, 1, 2);
+
+        loginButton.setOnAction(event -> {
+            System.out.println(nameInput.getText());
+            System.out.println(input.getText());
+        });
+
+        inputGrid.getChildren().addAll(nameLabel, nameInput, passLabel, input, loginButton);
+
+        pane.setCenter(inputGrid);
 
         Scene scene = new Scene(pane, 1200, 500);
 
