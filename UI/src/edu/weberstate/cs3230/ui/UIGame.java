@@ -32,6 +32,9 @@ public class UIGame extends Application {
     Player player1;
     Player player2;
 
+    GridPane leftPlayerGrid;
+    GridPane rightPlayerGrid;
+
     EventHandler<ActionEvent> clear = event -> {
         input.clear();
     };
@@ -52,8 +55,8 @@ public class UIGame extends Application {
         window.setResizable(false);
 
         BorderPane pane = new BorderPane();
-        GridPane leftPlayerGrid = new GridPane();
-        GridPane rightPlayerGrid = new GridPane();
+        leftPlayerGrid = new GridPane();
+        rightPlayerGrid = new GridPane();
 
         List<GridPane> grids = new ArrayList<GridPane>();
         grids.add(leftPlayerGrid);
@@ -187,6 +190,27 @@ public class UIGame extends Application {
         }
     }
 
+    protected void drawShips(Player player)
+    {
+        GridPane displayGrid = player.equals(player1) ? leftPlayerGrid : rightPlayerGrid;
+
+        Cell[][] grid = player.getGrid();
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                if (grid[i][j].hasShip())
+                {
+                    StackPane pane = (StackPane) displayGrid.getChildren().get(((j + 1) * 11) + 1 + i);
+                    String label = Character.toString(Character.toUpperCase(grid[i][j].getShip().getName().charAt(0)));
+                    pane.getChildren().clear();
+                    pane.getChildren().add(new Label(label));
+                }
+            }
+        }
+    }
+
     protected void playerSelectOrientation(Player player, Coordinate coord, int index)
     {
         write("Enter the ship orientation (either 'v' or 'h'): ");
@@ -209,12 +233,13 @@ public class UIGame extends Application {
                     playerSelectShip(player);
                 }
 
+                drawShips(player);
+
                 if (player.hasShipsToPlace())
                 {
                     playerSelectShip(player);
                 }
-
-                if (player.equals(player1))
+                else if (player.equals(player1))
                 {
                     playerSelectShip(player2);
                 }
