@@ -2,6 +2,7 @@ package edu.weberstate.cs3230.console;
 
 import edu.weberstate.cs3230.console.ConsoleGame;
 import edu.weberstate.cs3230.engine.IGame;
+import edu.weberstate.cs3230.ui.UIGame;
 
 public class Main {
 
@@ -12,6 +13,7 @@ public class Main {
         });
 
         IGame game = new ConsoleGame();
+        //IGame game = new UIGame();
 
         game.play();
     }
