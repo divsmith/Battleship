@@ -114,7 +114,7 @@ public class UIGame extends Application {
 
         if (path == null)
         {
-            // Set the text area to be unaccessible
+            // Set the text area to be inaccessible
             // unless a test is running.
             output.setEditable(false);
             output.setMouseTransparent(true);
@@ -267,22 +267,24 @@ public class UIGame extends Application {
                     Logger.getLogger().warning("Invalid ship placement: " + player.getUnplacedShips().get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
                     playerSelectShip(player);
                 }
-
-                drawShips(player);
-
-                if (player.hasShipsToPlace())
-                {
-                    playerSelectShip(player);
-                }
-                else if (player.equals(player1))
-                {
-                    clearGrid(player1);
-                    playerSelectShip(player2);
-                }
                 else
                 {
-                    clearGrid(player2);
-                    playerFire(player1);
+                    drawShips(player);
+
+                    if (player.hasShipsToPlace())
+                    {
+                        playerSelectShip(player);
+                    }
+                    else if (player.equals(player1))
+                    {
+                        clearGrid(player1);
+                        playerSelectShip(player2);
+                    }
+                    else
+                    {
+                        clearGrid(player2);
+                        playerFire(player1);
+                    }
                 }
 
                 clear();
@@ -470,8 +472,6 @@ public class UIGame extends Application {
 
             write("(" + shipLabel + ") - " + name);
         }
-
-        write();
     }
 
     protected String getShipSelectionRegex(List<Ship> ships)
