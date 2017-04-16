@@ -28,7 +28,6 @@ public class UIGame extends Application {
     TextArea output;
     Button enterButton;
     private static String path = null;
-    int index;
 
     Player player1;
     Player player2;
@@ -188,18 +187,58 @@ public class UIGame extends Application {
         }
     }
 
-    protected void player1SelectOrientation()
+    protected void playerSelectOrientation(Player player, Coordinate coord, int index)
+    {
+        write("Enter the ship orientation (either 'v' or 'h'): ");
+
+        setHandlers(event -> {
+            Character orientation = getOrientation(input.getText());
+
+            if (orientation == null)
+            {
+                write("Invalid orientation. Please enter 'v' or 'h': ");
+            }
+            else
+            {
+                if (!player.placeShip(index, new Placement(coord, orientation)))
+                {
+                    write(player.getUnplacedShips().get(index).getName() + " cannot be placed " +
+                            (orientation == 'v' ? "vertically" : "horizontally") + " at " + coord.getRowChar() + coord.getCol());
+
+                    Logger.getLogger().warning("Invalid ship placement: " + player.getUnplacedShips().get(index).getName() + " at " + coord.getRowChar() + coord.getCol() + " " + orientation);
+                    playerSelectShip(player);
+                }
+
+                if (player.hasShipsToPlace())
+                {
+                    playerSelectShip(player);
+                }
+
+                if (player.equals(player1))
+                {
+                    playerSelectShip(player2);
+                }
+
+                clear();
+                startGame();
+            }
+
+            clear();
+        });
+    }
+
+    protected void startGame()
     {
 
     }
 
-    protected void player1SelectCoordinate()
+    protected void playerSelectCoordinate(Player player, int index)
     {
-        List<Ship> ships = player1.getUnplacedShips();
+        List<Ship> ships = player.getUnplacedShips();
         write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
 
         setHandlers(event -> {
-            List<Ship> ships2 = player1.getUnplacedShips();
+            List<Ship> ships2 = player.getUnplacedShips();
 
             String coordinateSelectionRegex = getCoordinateRegex();
 
@@ -213,26 +252,26 @@ public class UIGame extends Application {
             }
             else
             {
-                player1SelectOrientation();
+                playerSelectOrientation(player, coord, index);
             }
 
             clear();
         });
     }
 
-    protected void player1SelectShip()
+    protected void playerSelectShip(Player player)
     {
-        write("\n" + player1.getName() + ", select a ship to place.\n");
+        write("\n" + player.getName() + ", select a ship to place.\n");
 
-        List<Ship> initialShips = player1.getUnplacedShips();
+        List<Ship> initialShips = player.getUnplacedShips();
         printShipOptions(initialShips);
 
         setHandlers(event -> {
-            List<Ship> ships = player1.getUnplacedShips();
+            List<Ship> ships = player.getUnplacedShips();
 
             // Select the ship to place.
             String shipSelectionRegex = getShipSelectionRegex(ships);
-            index = -1;
+            int index = -1;
             index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
 
             if (index < 0)
@@ -243,7 +282,7 @@ public class UIGame extends Application {
             }
             else
             {
-                player1SelectCoordinate();
+                playerSelectCoordinate(player, index);
             }
 
             clear();
@@ -301,6 +340,16 @@ public class UIGame extends Application {
 //
 //            write("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
 //        }
+    }
+
+    protected Character getOrientation(String string)
+    {
+        if (string.matches("(h|v)"))
+        {
+            return new Character(string.charAt(0));
+        }
+
+        return null;
     }
 
     protected String getCoordinateRegex()
@@ -388,7 +437,7 @@ public class UIGame extends Application {
             setHandlers(e -> {
                 player2.setName(input.getText());
                 clear();
-                player1SelectShip();
+                playerSelectShip(player1);
             });
         });
     }
