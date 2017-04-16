@@ -89,12 +89,12 @@ public class UIGame extends Application {
 
                     if (col == 0 && row > 0)
                     {
-                        cellPane.getChildren().add(new Label(Integer.toString(row - 1)));
+                        cellPane.getChildren().add(new Label(Character.toString((char) (row - 1 + 'A'))));
                     }
 
                     if (row == 0 && col > 0)
                     {
-                        cellPane.getChildren().add(new Label(Character.toString((char) (col - 1 + 'A'))));
+                        cellPane.getChildren().add(new Label(Integer.toString(col - 1)));
                     }
 
                     grid.add(cellPane, col, row);
