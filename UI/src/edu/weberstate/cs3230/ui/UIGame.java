@@ -3,6 +3,7 @@ package edu.weberstate.cs3230.ui;
 import edu.weberstate.cs3230.engine.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -27,8 +28,10 @@ public class UIGame extends Application {
     TextArea output;
     Button enterButton;
     private static String path = null;
+    int index;
 
-    List<Player> players = new ArrayList<Player>();
+    Player player1;
+    Player player2;
 
     EventHandler<ActionEvent> clear = event -> {
         input.clear();
@@ -148,8 +151,8 @@ public class UIGame extends Application {
 
     public void play()
     {
-        players.add(new Player());
-        players.add(new Player());
+        player1 = new Player();
+        player2 = new Player();
 
         getPlayerNames();
 
@@ -179,21 +182,66 @@ public class UIGame extends Application {
         }
     }
 
-    protected void placeShips()
-    {
-        Player player = players.get(0);
-        write("\n" + player.getName() + ", select a ship to place.\n");
+    EventHandler<ActionEvent> player1CoordinatePrompt = event -> {
+        List<Ship> ships = player1.getUnplacedShips();
+        clear();
+    };
 
-        setHandlers(event -> {
-            List<Ship> ships = player.getUnplacedShips();
+    EventHandler<ActionEvent> player1InvalidShip = event -> {
+        List<Ship> ships = player1.getUnplacedShips();
+
+        // Select the ship to place.
+        String shipSelectionRegex = getShipSelectionRegex(ships);
+        index = -1;
+        index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+
+        if (index < 0)
+        {
+            write("\nInvalid ship. Please choose a valid selection below.\n");
+
             printShipOptions(ships);
+        }
+        else
+        {
+            write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
+            setHandlers(player1CoordinatePrompt);
+        }
 
-            // Select the ship to place.
-            String shipSelectionRegex = getShipSelectionRegex(ships);
-            int index = -1;
-            index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+        clear();
+    };
 
-        });
+    EventHandler<ActionEvent> player1ShipPrompt = event -> {
+        List<Ship> ships = player1.getUnplacedShips();
+
+        // Select the ship to place.
+        String shipSelectionRegex = getShipSelectionRegex(ships);
+        index = -1;
+        index = getShipSelectionIndex(input.getText(), ships, shipSelectionRegex);
+
+        if (index < 0)
+        {
+            write("\nInvalid ship. Please choose a valid selection below.\n");
+
+            printShipOptions(ships);
+            setHandlers(player1InvalidShip);
+        }
+        else
+        {
+            write("Enter a coordinate for your " + ships.get(index).getName() + " (i.e. 'a0'): ");
+            setHandlers(player1CoordinatePrompt);
+        }
+
+        clear();
+    };
+
+    protected void placeShipsPlayer1()
+    {
+        write("\n" + player1.getName() + ", select a ship to place.\n");
+
+        List<Ship> initialShips = player1.getUnplacedShips();
+        printShipOptions(initialShips);
+
+        setHandlers(player1ShipPrompt);
 
 //        for (Player player : players)
 //        {
@@ -309,14 +357,14 @@ public class UIGame extends Application {
     {
         write("Player 1 name: ");
         setHandlers(event -> {
-            players.get(0).setName(input.getText());
+            player1.setName(input.getText());
             clear();
 
             write("Player 2 name: ");
             setHandlers(e -> {
-                players.get(1).setName(input.getText());
+                player2.setName(input.getText());
                 clear();
-                //placeShips();
+                placeShipsPlayer1();
             });
         });
     }
@@ -328,12 +376,12 @@ public class UIGame extends Application {
 
     protected void write(String message)
     {
-        output.appendText(message + " ");
+        output.appendText(message + "\n");
     }
 
     protected void clear()
     {
-        output.appendText(input.getText() + "\n");
+        //output.appendText(input.getText() + "\n");
         input.clear();
     }
 }
