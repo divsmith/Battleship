@@ -1,5 +1,6 @@
 package edu.weberstate.cs3230.ui;
 
+import edu.weberstate.cs3230.engine.Player;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +27,8 @@ public class Main extends Application {
     TextField input;
     TextArea output;
     Button enterButton;
+
+    List<Player> players = new ArrayList<Player>();
 
     EventHandler<ActionEvent> clear = event -> {
         input.clear();
@@ -129,7 +132,10 @@ public class Main extends Application {
 //        input.setText("testing\n\n\n");
 //        enterButton.fire();
 
-        run();
+        players.add(new Player());
+        players.add(new Player());
+
+        start();
     }
 
     private void setHandlers(EventHandler<ActionEvent> handler)
@@ -138,12 +144,33 @@ public class Main extends Application {
         input.setOnAction(handler);
     }
 
-    private void run()
+    private void start()
     {
-        EventHandler<ActionEvent> print = event -> {
-            System.out.println(input.getText() + "\n");
-        };
+        getPlayerNames();
+    }
 
-        setHandlers(print);
+    private void getPlayerNames()
+    {
+        write("Player 1 name: ");
+        setHandlers(event -> {
+            players.get(0).setName(input.getText());
+            clear();
+
+            write("Player 2 name: ");
+            setHandlers(e -> {
+                players.get(1).setName(input.getText());
+                clear();
+            });
+        });
+    }
+
+    private void write(String message)
+    {
+        output.appendText(message + "\n");
+    }
+
+    private void clear()
+    {
+        input.clear();
     }
 }
